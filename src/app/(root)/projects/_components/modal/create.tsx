@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -29,7 +28,7 @@ export const CreateModal = () => {
               <PackagePlus size={16} className="font-normal" />
             </span>
           </DialogTitle>
-          <DialogDescription className="h-full">
+          <div className="h-full">
             <div className="flex flex-col items-start gap-2 mt-2 py-2 border-[#383b4183] border-b">
               <Package size={18} className="ml-2" />
               <Input
@@ -40,12 +39,12 @@ export const CreateModal = () => {
             </div>
             <div className="mt-4">
               <Textarea
-                style={{ fontSize: "16px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-white placeholder:text-[16px] placeholder:text-[#626366] resize-none"
+                style={{ fontSize: "14px" }}
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-white placeholder:text-[14px] placeholder:text-[#626366] resize-none"
                 placeholder="Write a description, a project brief..."
               />
             </div>
-          </DialogDescription>
+          </div>
         </DialogHeader>
         <DialogFooter className="px-2 pt-3 border-[#383b4183] border-t">
           <button

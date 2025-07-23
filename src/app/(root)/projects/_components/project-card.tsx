@@ -2,7 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { FilePenLine, Trash } from "lucide-react";
+import { useModal } from "@/store/store";
 export const ProjectCard = () => {
+
+    const { onOpen } = useModal();
   const text =
     "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugiat vero illo.";
   return (
@@ -21,10 +24,10 @@ export const ProjectCard = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2 pl-3 border-[#27282D] border-l h-full">
-        <Button className="bg-transparent p-0 rounded-full text-[#589eaafb]">
+        <Button onClick={() => onOpen("editProject")} className=" bg-transparent p-0 rounded-full text-[#589eaafb]">
           <FilePenLine size={16} />
         </Button>
-        <Button className="bg-transparent p-0 rounded-full text-[#f97171]">
+        <Button  onClick={() => onOpen("deleteProject")} className="bg-transparent p-0 rounded-full text-[#f97171]">
           <Trash size={16} />
         </Button>
       </div>
