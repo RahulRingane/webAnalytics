@@ -2,7 +2,11 @@ import { ChevronRight } from "lucide-react";
 import React from "react";
 import { CreateProject } from "./create-project";
 
-export const Header = () => {
+type Props = {
+  project?: string;
+};
+
+export const Header = ({project}: Props) => {
   return (
     <div className="flex justify-between items-center px-4 py-3 border-[#27282D] border-b">
       <div className="flex items-center gap-3">
