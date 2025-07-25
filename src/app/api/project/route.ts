@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   try {
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    revalidatePath("/projects")
     return NextResponse.json(
       { project, message: "Project created", success: true },
       { status: 201 }
