@@ -15,7 +15,7 @@ type MetadataType = {
 
 export const Metadata = ({ domain }: { domain: string }) => {
   const { activeTab } = useTabStore();
-  const [metadata, setMetadata] = useState<MetadataType | null>();
+  const [metadata, setMetadata] = useState<MetadataType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
@@ -27,17 +27,19 @@ export const Metadata = ({ domain }: { domain: string }) => {
         const res = await fetchMetadataAction(domain);
         console.log("Metadata:", res);
         if (res && "data" in res) {
-          const { data, error } = res;
-          if (error) {
+          const { data } = res;
+          if (data && typeof data === "object" && "error" in data) {
             setError(true);
             setMetadata(null);
             return;
           }
           if (data) {
+            // Explicitly type data as MetadataType
+            const typedData = data as MetadataType;
             setMetadata({
-              title: data?.title || "N/A",
-              description: data?.description || "N/A",
-              image: data?.image,
+              title: typedData?.title || "N/A",
+              description: typedData?.description || "N/A",
+              image: typedData?.image ?? undefined,
             });
           } else {
             setError(true);

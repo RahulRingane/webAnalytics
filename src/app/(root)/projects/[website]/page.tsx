@@ -9,13 +9,16 @@ import { getProjectByDomain } from "@/use-cases/project";
 import WebsiteDetailSkeleton from "../_components/website-skeleton";
 
 type Props = {
-  params: Promise<{ website: string }>;
+  params: { website: string };
 };
 
-
 const WebsiteDetailPage = async ({ params }: Props) => {
-  const {website} = await params;
+  const {website} = params;
+  //const website  = "space.in"
   const websiteData = await getProjectByDomain(website);
+  console.log(params, "params");
+  console.log(website, "website");
+  console.log(websiteData, "Websitedata")
 
   const tabs = [
     { id: "metadata", label: "Metadata" },
