@@ -1,5 +1,3 @@
-// src/lib/metadata.ts
-import { error } from "console";
 import getMetaData from "metadata-scraper";
 
 export async function extractMetadata(url: string) {
