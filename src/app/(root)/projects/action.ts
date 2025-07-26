@@ -13,6 +13,6 @@ export async function fetchMetadataAction(domain: string) {
     return data.data;
   } catch (error) {
     console.error("Error fetching metadata:", error);
-    return null;
+    return {error};
   }
 }
