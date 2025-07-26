@@ -8,13 +8,14 @@ import { Issues } from "../_components/issues";
 import { getProjectByDomain } from "@/use-cases/project";
 import WebsiteDetailSkeleton from "../_components/website-skeleton";
 import { Suspense } from "react";
+import { MetadataError } from "../_components/metadata-error";
 
 type Props = {
   params: { website: string };
 };
 
 const WebsiteDetailPage = async ({ params }: Props) => {
-  const {website} = params;
+  const { website } = params;
 
   return (
     <Suspense fallback={<WebsiteDetailSkeleton />}>
@@ -34,7 +35,11 @@ const WebsiteDetail = async ({ website }: { website: string }) => {
     { id: "issues", label: "Issues" },
   ];
 
-  return (
+  return !websiteData ? (
+    <div className="flex justify-center items-center w-full h-screen">
+      <MetadataError />
+    </div>
+  ) : (
     <>
       <Header project={websiteData?.name} />
       <div className="px-32 py-10">
