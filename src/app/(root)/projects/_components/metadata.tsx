@@ -12,6 +12,7 @@ type MetadataType = {
   title?: string;
   description?: string;
   image?: string;
+  favicon?: string;
 };
 
 export const Metadata = ({ domain }: { domain: string }) => {
@@ -42,8 +43,9 @@ export const Metadata = ({ domain }: { domain: string }) => {
               title: typedData?.title || "N/A",
               description: typedData?.description || "N/A",
               image: typedData?.image ?? undefined,
+              favicon: typedData?.favicon ?? undefined,
             });
-            setFavIcon(data?.favicon || "");
+            setFavIcon(typedData?.favicon || "");
           } else {
             setError(true);
             setMetadata(null);
