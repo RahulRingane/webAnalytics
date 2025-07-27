@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { fetchMetadataAction } from "../action";
 import { MetadataSkeleton } from "./metadata-skeleton";
 import { MetadataError } from "./metadata-error";
+import { useProject } from "@/contexts/project-context";
 
 type MetadataType = {
   title?: string;
@@ -18,6 +19,7 @@ export const Metadata = ({ domain }: { domain: string }) => {
   const [metadata, setMetadata] = useState<MetadataType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const { setFavIcon } = useProject();
 
   useEffect(() => {
     const fetchMetadata = async () => {
@@ -41,6 +43,7 @@ export const Metadata = ({ domain }: { domain: string }) => {
               description: typedData?.description || "N/A",
               image: typedData?.image ?? undefined,
             });
+            setFavIcon(data?.favicon || "");
           } else {
             setError(true);
             setMetadata(null);
@@ -55,6 +58,7 @@ export const Metadata = ({ domain }: { domain: string }) => {
       }
     };
     fetchMetadata();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [domain]);
 
   return (
