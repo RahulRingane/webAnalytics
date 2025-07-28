@@ -43,15 +43,11 @@ export default function Home() {
         onPlaying={handleVideoLoaded}
         onLoadedData={handleVideoLoaded}
       >
-        <source src="/video/hero-1.mp4" type="video/mp4" />
+        <source src="/video/hero-2.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <header
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(42,56,105,0.7273503151260504) 18%, rgba(0,0,0,0.7189469537815126) 66%, rgba(0,0,0,0.10830269607843135) 100%)",
-        }}
-        className={`relative flex justify-between items-center bg-transparent ${isVideoLoaded ? "visible" : "invisible"} backdrop-blur-md mx-auto mt-6 px-6 max-md:px-3 py-4 rounded-2xl w-full max-w-6xl`}
+        className={`relative flex justify-between items-center ${isVideoLoaded ? "visible" : "invisible"} mx-auto mt-6 px-6 max-md:px-3 py-4 rounded-2xl w-full max-w-6xl`}
       >
         <div>
           <span className="text-xl">Analytics</span>
@@ -79,7 +75,7 @@ export default function Home() {
             className="relative flex justify-center items-center bg-white hover:bg-white mt-3 px-2 py-1 rounded-lg w-fit overflow-hidden text-black"
           >
             <Link
-              href="/dashboard"
+              href="/projects"
               className="flex justify-center items-center gap-2 w-fit text-lg transition-all duration-300 ease-in-out"
             >
               Get Started <ArrowUpRight size={18} />

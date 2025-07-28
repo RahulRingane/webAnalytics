@@ -9,13 +9,13 @@ interface SidebarLinkItem {
 }
 
 const sidebarLinks: SidebarLinkItem[] = [
-  {
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    label: "Dashboard",
-    iconColor: "#5B98FF",
-    pattern: /^\/dashboard/,
-  },
+  //{
+  //  href: "/dashboard",
+  //  icon: LayoutDashboard,
+  //  label: "Dashboard",
+  //  iconColor: "#5B98FF",
+  //  pattern: /^\/dashboard/,
+  // },
   {
     href: "/projects",
     icon: FolderGit2,
