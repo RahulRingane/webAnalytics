@@ -33,6 +33,7 @@ export const getAnalytics = async (domain: string | null) => {
  }
  try {
   const res = await getDomainAnalytics(domain);
+  console.log(res, "res");
   return res;
  } catch (error) {
   console.error(`Error fetching analytics for domain ${domain}:`, error);

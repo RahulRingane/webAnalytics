@@ -28,7 +28,7 @@ const WebsiteDetailPage = async ({ params }: Props) => {
 
 const WebsiteDetail = async ({ website }: { website: string }) => {
   const websiteData = await getAnalytics(website);
-  console.log(websiteData);
+  console.log(websiteData, "websitedata");
   const tabs = [
     { id: "metadata", label: "Metadata" },
     { id: "analytics", label: "Analytics" },

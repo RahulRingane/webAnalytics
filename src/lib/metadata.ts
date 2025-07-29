@@ -37,8 +37,10 @@ export async function extractMetadata(url: string) {
       url: $('meta[property="og:url"]').attr("content") || url,
        favicon: $('link[rel="icon"]').attr("href") || null
     };
-
+    
+    console.log(data, "data")
     return { data, error: null };
+  
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error extracting metadata:", error);
