@@ -9,9 +9,29 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useModal } from "@/store/store";
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export const DeleteModal = () => {
   const { isOpen, type, data, onClose } = useModal();
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    try {
+      setDeleting(true);
+      const res = await axios.delete(`/api/project/${data.id}`);
+      if (res.data.success) {
+        toast.success("project deleted successfully");
+      }
+    } catch (error) {
+      console.error("", error);
+      toast.error("An error occured while deleting the project");
+    } finally {
+      setDeleting(false);
+      onClose();
+    }
+  }
 
   return (
     <Dialog
@@ -22,7 +42,7 @@ export const DeleteModal = () => {
         <DialogHeader>
           <DialogTitle>Delete Project</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete {data?.projectName}? This action
+            Are you sure you want to delete {data?.name}? This action
             cannot be undone.
           </DialogDescription>
         </DialogHeader>
@@ -30,15 +50,17 @@ export const DeleteModal = () => {
         <DialogFooter className="px-2">
           <button
             onClick={onClose}
+            disabled={deleting}
             className="bg-[#323232] hover:bg-[#32323298] px-6 py-0 rounded-lg w-fit h-8 text-white text-xs"
           >
             Cancel
           </button>
           <button
-            onClick={onClose}
+            onClick={handleDelete}
+            disabled={deleting}
             className="bg-[#823d3d] hover:bg-[#823d3dc3] px-6 py-0 rounded-lg w-fit h-8 text-white text-xs"
           >
-            Delete
+            {deleting ? "Deleting..." : "Delete"}
           </button>
         </DialogFooter>
       </DialogContent>
