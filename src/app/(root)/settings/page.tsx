@@ -1,6 +1,8 @@
-import { AnimatedTabs } from "./components/animated-tab";
-import { Issues } from "./components/issues";
-import { Logs } from "./components/logs";
+import { AnimatedTabs } from "./_components/animated-tab";
+import { Issues } from "./_components/issues";
+import { Logs } from "./_components/logs";
+import { Suspense } from "react";
+import AllLogs from "./_components/all-logs";
 
 const SettingsPage = () => {
   const tabs = [
@@ -17,7 +19,9 @@ const SettingsPage = () => {
           </p>
         </div>
         <AnimatedTabs tabs={tabs} />
-        <Logs />
+        <Suspense fallback={<div>Loading logs...</div>}>
+          <AllLogs />
+        </Suspense>
         <Issues />
       </div>
     </div>
