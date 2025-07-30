@@ -13,7 +13,6 @@ export async function fetchMetadataAction(domain: string) {
     }
     return data.data;
   } catch (error) {
-   
-    return {error};
+    return { error };
   }
 }

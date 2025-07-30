@@ -7,7 +7,6 @@ type Props = {
 };
 
 const Provider = async ({ children }: Props) => {
-
   await headers();
 
   const session = await auth();

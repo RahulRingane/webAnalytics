@@ -19,30 +19,30 @@ export const SidebarLink = ({
   iconColor,
   pattern,
 }: SidebarLinkProps) => {
-    const pathname = usePathname();
-    const isActive = pattern.test(pathname);
+  const pathname = usePathname();
+  const isActive = pattern.test(pathname);
 
   return (
     <li>
       <Link
         href={href}
         className={`flex items-center p-2 rounded-lg text-sm
-              ${ isCollapsed ? "justify-center" : "space-x-3"}
+              ${isCollapsed ? "justify-center" : "space-x-3"}
               ${isActive ? `text-white` : "text-gray-300 hover:bg-[#1E1F23]"}
               transition-colors duration-200`}
         style={
-            isActive ? {backgroundColor: hexToRGBA(iconColor, 0.15) } : undefined
+          isActive ? { backgroundColor: hexToRGBA(iconColor, 0.15) } : undefined
         }
       >
         <Icon size={16} color={isActive ? iconColor : "#6B7280"} />
-        {!isCollapsed &&  (
-            <span
-             style={{
-                color: isActive ? iconColor : undefined,
-             }}
-             >
-                {label}
-             </span>
+        {!isCollapsed && (
+          <span
+            style={{
+              color: isActive ? iconColor : undefined,
+            }}
+          >
+            {label}
+          </span>
         )}
       </Link>
     </li>

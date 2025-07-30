@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export const ProjectCard = ({ data }: { data: Project }) => {
   const { onOpen } = useModal();
   const router = useRouter();
-  
+
   const encodedDomain = encodeURIComponent(data?.domain ?? "unknown");
   const projectLink = `/projects/${encodedDomain}`;
 

@@ -337,7 +337,7 @@
           trigger("scroll_depth", { depth: marker });
         }
       });
-    }, 1000)
+    }, 1000),
   );
 
   // Initialize everything

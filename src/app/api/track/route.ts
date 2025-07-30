@@ -80,6 +80,7 @@ const countryNames: Record<string, string> = {
   CR: "Costa Rica",
 };
 
+console.log("in prisma here");
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
@@ -155,7 +156,6 @@ export async function POST(req: NextRequest) {
   try {
     const payload = await req.json();
     const {
-      domain,
       url,
       event,
       source,
@@ -166,17 +166,20 @@ export async function POST(req: NextRequest) {
       referrer,
       path,
     } = payload;
+    const domain = "rahulringane.github.io/index";
+    console.log(domain, "visitorId");
 
     if (!url.includes(domain)) {
+      console.log("hiiiii");
       return NextResponse.json(
         {
           error:
             "The script points to a different domain than the current URL. Make sure they match.",
         },
-        { headers: corsHeaders }
+        { headers: corsHeaders },
       );
     }
-
+    console.log("mid");
     const projectExist = await prisma.project.findUnique({
       where: { domain: domain },
     });
@@ -186,12 +189,12 @@ export async function POST(req: NextRequest) {
           error:
             "The project does not exist. Make sure you have created the project in your dashboard.",
         },
-        { headers: corsHeaders }
+        { headers: corsHeaders },
       );
     }
 
     const projectId = projectExist.id;
-
+    console.log(projectId, "projectid");
     // Get country information using our enhanced method
     const { code: countryCode, name: countryName } = getCountryInfo(req);
 
@@ -347,13 +350,13 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { success: true, event, received: true },
-      { headers: corsHeaders }
+      { headers: corsHeaders },
     );
   } catch (error) {
     console.error("Error processing analytics data:", error);
     return NextResponse.json(
       { error: "Failed to process analytics data", details: String(error) },
-      { status: 500, headers: corsHeaders }
+      { status: 500, headers: corsHeaders },
     );
   }
 }

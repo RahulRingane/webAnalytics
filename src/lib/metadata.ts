@@ -14,7 +14,7 @@ export async function extractMetadata(url: string) {
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch URL: ${response.status} ${response.statusText}`
+        `Failed to fetch URL: ${response.status} ${response.statusText}`,
       );
     }
 
@@ -35,12 +35,12 @@ export async function extractMetadata(url: string) {
         null,
       image: $('meta[property="og:image"]').attr("content") || null,
       url: $('meta[property="og:url"]').attr("content") || url,
-       favicon: $('link[rel="icon"]').attr("href") || null
+      favicon: $('link[rel="icon"]').attr("href") || null,
     };
-    
-    console.log(data, "data")
+
+    console.log(data, "data");
     return { data, error: null };
-  
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error extracting metadata:", error);

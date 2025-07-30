@@ -8,11 +8,14 @@ export default auth((req: any) => {
 
   const isAuthenticated = !!req.auth;
 
-  if (nextUrl.pathname === "/api/track" || nextUrl.pathname === "/tracking-script.js") {
-   console.log("Passed")
-   return NextResponse.next();
- }
- 
+  if (
+    nextUrl.pathname === "/api/track" ||
+    nextUrl.pathname === "/tracking-script.js"
+  ) {
+    console.log("Passed");
+    return NextResponse.next();
+  }
+
   console.log("isAuthenticated", isAuthenticated);
 
   const isAuthRoute = AUTH_ROUTES.includes(nextUrl.pathname);
