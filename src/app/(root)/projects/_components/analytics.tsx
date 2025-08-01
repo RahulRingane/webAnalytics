@@ -1,39 +1,60 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import {
+ NextJsScript,
+ nextJsScript,
+ reactJsScript,
+ ReactJsScript
+} from "@/config/code";
 import { useTabStore } from "@/store/store";
-import { ArrowUp, CloudAlert, Copy } from "lucide-react";
-import { AnalyticsGraph } from "./analytics-graph";
-import { NextJsScript, CodeDisplay } from "@/config/code";
+import { ArrowUp, CloudAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { AnalyticsGraph } from "./analytics-graph";
+import { ScriptDisplay } from "./script";
+
 
 export const Analytics = ({ analytics }: { analytics: any }) => {
   const { activeTab } = useTabStore();
   const [scriptHtml, setScriptHtml] = useState<string | null>(null);
+  const [reactScriptHtml, setReactScriptHtml] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchScriptHtml = async () => {
+    const fetchScripts = async () => {
       if (!analytics) {
-        const html = await NextJsScript();
-        setScriptHtml(html);
+        try {
+          const nextHtml = await NextJsScript();
+          const reactHtml = await ReactJsScript();
+
+          setScriptHtml(nextHtml);
+          setReactScriptHtml(reactHtml);
+        } catch (error) {
+          console.error("Failed to fetch script HTML:", error);
+          toast.error("Unable to load tracking scripts");
+        }
       }
     };
-    fetchScriptHtml();
+
+    fetchScripts();
   }, [analytics]);
 
-  const handleNextScriptCopy = async () => {
+  const copyToClipboard = async (script: string, successMessage: string) => {
     try {
-      if (!scriptHtml) return;
-      await navigator.clipboard.writeText(scriptHtml);
-      toast.success("Copied to clipboard");
+      await navigator.clipboard.writeText(script);
+      toast.success(successMessage);
     } catch (error) {
       console.error(error);
       toast.error("Failed to copy to clipboard");
     }
   };
 
-  // If no analytics data is available
+  const handleNextScriptCopy = () =>
+    copyToClipboard(nextJsScript, "Next.js script copied");
+  const handleReactScriptCopy = () =>
+    copyToClipboard(reactJsScript, "React script copied");
+
+  // No analytics data scenario
   if (!analytics) {
     return (
       <div
@@ -45,19 +66,19 @@ export const Analytics = ({ analytics }: { analytics: any }) => {
           <CloudAlert size={48} className="text-neutral-400" />
           <h2 className="font-semibold text-xl">No Analytics Data</h2>
           <p className="text-neutral-400 text-center">
-            It seems like analytics tracking is not set up for your website.
+            Analytics tracking is not configured for your website. Use the
+            scripts below to get started.
           </p>
 
           {scriptHtml && (
-            <div className="relative mt-4 w-full">
-              <button
-                onClick={handleNextScriptCopy}
-                className="top-4 right-4 absolute"
-              >
-                <Copy size={16} className="text-neutral-300" />
-              </button>
-              <CodeDisplay html={scriptHtml} />
-            </div>
+            <ScriptDisplay html={scriptHtml} onCopy={handleNextScriptCopy} />
+          )}
+
+          {reactScriptHtml && (
+            <ScriptDisplay
+              html={reactScriptHtml}
+              onCopy={handleReactScriptCopy}
+            />
           )}
         </div>
       </div>
