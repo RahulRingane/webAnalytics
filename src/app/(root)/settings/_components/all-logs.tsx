@@ -8,7 +8,7 @@ export default async function AllLogs() {
   console.log(logs);
 
   return (
-    <Suspense fallback={<LogsSkeleton/>}>
+    <Suspense fallback={<LogsSkeleton />}>
       <Logs logs={logs} />
     </Suspense>
   );

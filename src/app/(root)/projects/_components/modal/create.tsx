@@ -50,7 +50,7 @@ export const CreateModal = memo(() => {
     toast.success("Project created successfully");
     router.refresh();
     onClose();
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, onClose]);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ export const CreateModal = memo(() => {
             onClick={onSubmit}
             className="bg-[#3d7682] hover:bg-[#3d7782c3] px-6 py-0 rounded-lg w-fit h-8 text-white text-xs"
           >
-           {creating ? "Creating..." : "Create Project"}
+            {creating ? "Creating..." : "Create Project"}
           </button>
         </DialogFooter>
       </DialogContent>

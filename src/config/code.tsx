@@ -43,7 +43,5 @@ export async function ReactJsScript() {
   return html;
 }
 
-
-
 export const reactJsScript = `<script defer data-domain="your-website.com" 
 src="https://monitoryour.website/tracking-script.js"></script>`;

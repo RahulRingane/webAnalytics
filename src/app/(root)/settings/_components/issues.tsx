@@ -53,8 +53,9 @@ export const Issues = () => {
 
   return (
     <Card
-      className={`bg-transparent border border-[#383b4183] ${activeTab !== "issues" ? "hidden" : ""
-        }`}
+      className={`bg-transparent border border-[#383b4183] ${
+        activeTab !== "issues" ? "hidden" : ""
+      }`}
     >
       <CardHeader>
         <CardTitle className="text-white">Bug Reports</CardTitle>
@@ -95,14 +96,15 @@ export const Issues = () => {
                   </div>
                 </div>
                 <div
-                  className={`px-2 py-1 rounded font-medium text-xs ${report.status === "isResolved"
-                    ? "bg-green-500/10 text-green-500"
-                    : report.status === "inProgress"
-                      ? "bg-amber-500/10 text-amber-500"
-                      : "bg-gray-500/10 text-gray-500"
-                    }`}
+                  className={`px-2 py-1 rounded font-medium text-xs ${
+                    report.status === "isResolved"
+                      ? "bg-green-500/10 text-green-500"
+                      : report.status === "inProgress"
+                        ? "bg-amber-500/10 text-amber-500"
+                        : "bg-gray-500/10 text-gray-500"
+                  }`}
                 >
-                 {report.status === "inProgress"
+                  {report.status === "inProgress"
                     ? "In Progress"
                     : report.status.substring(2)}
                 </div>

@@ -34,7 +34,7 @@ export const DeleteModal = () => {
       setDeleting(false);
       onClose();
     }
-  }
+  };
 
   return (
     <Dialog
@@ -45,8 +45,8 @@ export const DeleteModal = () => {
         <DialogHeader>
           <DialogTitle>Delete Project</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete {data?.name}? This action
-            cannot be undone.
+            Are you sure you want to delete {data?.name}? This action cannot be
+            undone.
           </DialogDescription>
         </DialogHeader>
 

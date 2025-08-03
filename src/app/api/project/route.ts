@@ -19,8 +19,8 @@ export async function POST(req: Request) {
     if (!values.domain || !values.name || !values.description) {
       return NextResponse.json(
         { message: "Missing required fields", success: false },
-        { status: 400 }
-      )
+        { status: 400 },
+      );
     }
     const project = await prisma.project.create({
       data: {
@@ -40,13 +40,13 @@ export async function POST(req: Request) {
     revalidatePath("/projects");
     return NextResponse.json(
       { project, message: "Project created", success: true },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: any) {
     console.error("Error creating project", error);
     return NextResponse.json(
       { message: "Internal Server Error", success: false },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
