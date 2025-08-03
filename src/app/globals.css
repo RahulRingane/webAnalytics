@@ -159,3 +159,8 @@ pre {
  padding: 10px;
  border-radius: 10px;
 }
+
+.font-subheading {
+  font-family: "Instrument Serif ", "Instrument Serif Fallback";
+  font-weight: 500;
+}
