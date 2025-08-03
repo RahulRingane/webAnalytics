@@ -24,7 +24,6 @@ export const CreateModal = memo(() => {
     domain: "",
     description: "",
   });
-
   const [creating, setCreating] = useState(false);
 
   const handleChange = useCallback(
@@ -34,22 +33,31 @@ export const CreateModal = memo(() => {
         [e.target.name]: e.target.value,
       }));
     },
-    [],
+    []
   );
 
   const onSubmit = useCallback(async () => {
     if (!data.name || !data.domain || !data.description) {
       return toast.error("Please fill all the fields");
     }
-    setCreating(true);
-    const res = await axios.post("/api/project", data);
-    if (!res.data.success) {
-      return toast.error(res.data.message);
+    try {
+      setCreating(true);
+      const res = await axios.post("/api/project", data);
+      if (!res.data.success) {
+        toast.error(res.data.message);
+      }
+      toast.success("Project created successfully");
+      router.refresh();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error("Error creating project:", error);
+      toast.error(error?.response?.data?.message ||  "Error creating project");
+    } finally {
+      setCreating(false);
+      setData({ name: "", domain: "", description: "" });
+      onClose();
     }
-    setData({ name: "", domain: "", description: "" });
-    toast.success("Project created successfully");
-    router.refresh();
-    onClose();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, onClose]);
 
@@ -82,7 +90,7 @@ export const CreateModal = memo(() => {
               <Package size={18} className="ml-2 text-[#626366]" />
               <Input
                 style={{ fontSize: "24px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-black placeholder:text-[24px] placeholder:text-[#626366]"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-white placeholder:text-[24px] placeholder:text-[#626366]"
                 placeholder="Project name"
                 name="name"
                 value={data.name}
@@ -90,7 +98,7 @@ export const CreateModal = memo(() => {
               />
               <Input
                 style={{ fontSize: "16px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-black placeholder:text-[16px] placeholder:text-[#626366]"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-white placeholder:text-[16px] placeholder:text-[#626366]"
                 placeholder="Domain (mihircodes.in)"
                 name="domain"
                 value={data.domain}
@@ -100,7 +108,7 @@ export const CreateModal = memo(() => {
             <div className="mt-4">
               <Textarea
                 style={{ fontSize: "14px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-black placeholder:text-[14px] placeholder:text-[#626366] resize-none"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-white placeholder:text-[14px] placeholder:text-[#626366] resize-none"
                 placeholder="Write a description, a project brief..."
                 name="description"
                 value={data.description}
