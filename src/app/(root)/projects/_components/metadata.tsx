@@ -7,6 +7,7 @@ import { fetchMetadataAction } from "../action";
 import { MetadataSkeleton } from "./metadata-skeleton";
 import { MetadataError } from "./metadata-error";
 import { useProject } from "@/contexts/project-context";
+import { CloudAlert } from "lucide-react";
 
 type MetadataType = {
   title?: string;
@@ -65,9 +66,8 @@ export const Metadata = ({ domain }: { domain: string }) => {
 
   return (
     <div
-      className={`flex-col gap-2 p-3 border border-[#383b4183] rounded-lg ${
-        activeTab === "metadata" ? "flex" : "hidden"
-      }`}
+      className={`flex-col gap-2 p-3 border border-[#383b4183] rounded-lg ${activeTab === "metadata" ? "flex" : "hidden"
+        }`}
     >
       {loading ? (
         <MetadataSkeleton />
@@ -86,13 +86,10 @@ export const Metadata = ({ domain }: { domain: string }) => {
           {metadata?.image ? (
             <div className="flex flex-col gap-2">
               <span className="text-[#ffffff9c] text-xs">Opengraph Image</span>
-              <Image
-                src={metadata.image}
-                width={1200}
-                height={630}
-                alt="OG Image"
-                className="rounded-lg w-auto object-fill"
-              />
+              <div className="flex flex-col flex-grow flex-1 justify-center items-center gap-3 p-3 w-full h-full min-h-[148px] text-white">
+                <CloudAlert className="text-white" size={32} />
+                No OG Image Found
+              </div>
             </div>
           ) : (
             <div className="flex flex-col gap-1">
