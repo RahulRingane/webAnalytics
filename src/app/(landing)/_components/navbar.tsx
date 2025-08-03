@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { Github } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -32,10 +33,17 @@ const Navbar = () => {
 
           <AnimationContainer animation="fadeLeft" delay={0.1}>
             <div className="flex items-center gap-x-4">
-              <Link href="/projects">
-                <Button size="sm" className="bg-[#C05D5D] hover:bg-[#c05d5dcb]">
-                  Get started
-                </Button>
+              <Link
+                href="https://github.com/RahulRingane/webAnalytics"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button
+                  className="flex items-center gap-2 bg-gradient-to-b from-[#834747] via-[#a05151] to-[#893e3e] px-4 py-1 rounded-md text-white text-sm"
+                >
+                  <Github size={16} />
+                  Star us on GitHub
+                </button>
               </Link>
             </div>
           </AnimationContainer>
