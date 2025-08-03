@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import sidebarLinks from "@/config/sidebar";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import {
-  ChartNoAxesCombined,
   LogOut,
   PanelRightClose,
   PanelRightOpen,
@@ -14,6 +13,7 @@ import { signOut, useSession } from "next-auth/react";
 import { SidebarLink } from "./sidebar-links";
 import { useSidebar } from "@/contexts/sidebar-context";
 import Link from "next/link";
+import Image from "next/image";
 
 export const Sidebar = () => {
   const { isCollapsed, toggleSidebar } = useSidebar();
@@ -28,9 +28,12 @@ export const Sidebar = () => {
     >
       <div className="flex justify-between items-center gap-2 p-4 pr-0">
         {!isCollapsed && (
-          <Link href="/">
-            <ChartNoAxesCombined size={36} className="text-white" />
-          </Link>
+         <Link href="/" className="flex items-center gap-2">
+            <Image src="/logo.svg" width={28} height={28} alt="Logo" />
+            <span className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-xl">
+              Weblytics
+            </span>
+            </Link>
         )}
         {!isMobile && (
           <Button
