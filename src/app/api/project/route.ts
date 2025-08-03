@@ -11,17 +11,28 @@ export async function POST(req: Request) {
     if (!session) {
       return NextResponse.json(
         { user: null, message: "Unauthorized", success: false },
-        { status: 403 },
+        { status: 403 }
       );
     }
 
-    const values = await req.json();
+     const values = await req.json();
     if (!values.domain || !values.name || !values.description) {
       return NextResponse.json(
         { message: "Missing required fields", success: false },
-        { status: 400 },
+        { status: 400 }
       );
     }
+
+    const existingProject = await prisma.project.findFirst({
+      where: { domain: values.domain },
+    });
+    if (existingProject) {
+      return NextResponse.json(
+        { message: "Domain already exists", success: false },
+        { status: 400 }
+      );
+    }
+
     const project = await prisma.project.create({
       data: {
         domain: values.domain,
