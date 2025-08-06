@@ -7,6 +7,7 @@ import Images from "@/components/globals/images";
 import { Button } from "@/components/ui/button";
 import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
+import { Heading } from "@/components/globals/heading";
 
 const Hero = () => {
   const languages = [
@@ -21,6 +22,7 @@ const Hero = () => {
 
   return (
     <Wrapper className="relative flex-1 pt-20 lg:pt-32 w-full h-full min-h-screen">
+      {/* Main content container */}
       <div className="z-[11] flex lg:flex-row flex-col lg:gap-16 w-full h-full">
         <div className="flex flex-col items-start gap-10 py-8 w-full">
           <div className="flex flex-col items-start gap-4">
@@ -29,9 +31,11 @@ const Hero = () => {
             </AnimationContainer>
 
             <AnimationContainer animation="fadeUp" delay={0.4}>
+              <Heading>
               <h1 className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-5xl lg:text-6xl !leading-tight">
                 {"Unlock Your Website's Potential"}
               </h1>
+              </Heading>
             </AnimationContainer>
 
             <AnimationContainer animation="fadeUp" delay={0.6}>
@@ -46,7 +50,7 @@ const Hero = () => {
           <AnimationContainer animation="fadeUp" delay={0.8}>
             <div className="w-full">
               <Link href="/projects">
-                <Button className="bg-[#C05D5D] hover:bg-[#c05d5dcb] w-full md:w-auto">
+                <Button className="bg-[#C05D5D] hover:bg-[#c05d5dcb] w-full md:w-auto text-shadow-md">
                   Get Started Now
                 </Button>
               </Link>

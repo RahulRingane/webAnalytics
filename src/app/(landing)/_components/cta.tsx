@@ -89,7 +89,7 @@ const CTA = () => {
             <Link href="/projects">
               <Button
                 size="lg"
-                className="bg-[#C05D5D] hover:bg-[#c05d5dcb] mt-6"
+                className="bg-[#C05D5D] hover:bg-[#c05d5dcb] mt-6 text-shadow-md"
               >
                 Get Started
                 <ArrowRightIcon className="ml-2 size-4" />

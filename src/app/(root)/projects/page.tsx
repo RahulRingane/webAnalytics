@@ -1,3 +1,4 @@
+
 import { assertAuthenticated } from "@/lib/session";
 import { getAllProjects } from "@/use-cases/project";
 import { Suspense } from "react";
@@ -8,6 +9,8 @@ import { DeleteModal } from "./_components/modal/delete";
 import { EditModal } from "./_components/modal/edit";
 import { ProjectCard } from "./_components/project-card";
 import { ProjectSkelteon } from "./_components/project-skeleton";
+import { Heading } from "lucide-react";
+
 
 const ProjectsPage = async () => {
   return (

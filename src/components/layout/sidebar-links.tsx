@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { hexToRGBA } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { SubHeading } from "../globals/SubHeading";
 
 interface SidebarLinkProps {
   href: string;
@@ -36,6 +37,7 @@ export const SidebarLink = ({
       >
         <Icon size={16} color={isActive ? iconColor : "#6B7280"} />
         {!isCollapsed && (
+          <SubHeading>
           <span
             style={{
               color: isActive ? iconColor : undefined,
@@ -43,6 +45,7 @@ export const SidebarLink = ({
           >
             {label}
           </span>
+          </SubHeading>
         )}
       </Link>
     </li>

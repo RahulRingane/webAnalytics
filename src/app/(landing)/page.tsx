@@ -12,7 +12,7 @@ const HomePage = () => {
           className="top-0 left-0 z-[10] absolute w-full h-[200px] rotate-[180deg]"
           style={{
             maskImage: "linear-gradient(transparent, black 85%)",
-            backgroundColor: "#4366e650",
+            backgroundColor: "#c05d5d65",
           }}
         />
         <Hero />
