@@ -5,7 +5,6 @@ import AnimationContainer from "@/components/globals/animation-container";
 import Wrapper from "@/components/globals/wrapper";
 import Images from "@/components/globals/images";
 import { Button } from "@/components/ui/button";
-//import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
 import {
   Marquee,
@@ -68,9 +67,7 @@ const Hero = () => {
               </p>
               <div className="relative w-full max-w-[calc(100vw-2rem)] lg:max-w-lg">
                 <Marquee>
-                  <MarqueeFade side="left" />
-                  <MarqueeFade side="right" />
-                  <MarqueeContent>
+                  <MarqueeContent  autoFill={false} pauseOnHover={false}>
                     {languages.map((Company, index) => (
                       <div
                         key={index}

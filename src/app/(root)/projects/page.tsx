@@ -10,9 +10,11 @@ import { EditModal } from "./_components/modal/edit";
 import { ProjectCard } from "./_components/project-card";
 import { ProjectSkelteon } from "./_components/project-skeleton";
 import { Heading } from "lucide-react";
+import Projects from "./_components/projects";
 
 
-const ProjectsPage = async () => {
+
+export default async function ProjectsPage() {
   return (
     <div className="flex flex-col w-full h-full">
       <Header title="Your Projects" />
@@ -24,8 +26,9 @@ const ProjectsPage = async () => {
       <DeleteModal />
     </div>
   );
-};
+}
 
+/*
 const Projects = async () => {
   const session = await assertAuthenticated();
   const projects = await getAllProjects(session.id);
@@ -43,5 +46,5 @@ const Projects = async () => {
     </div>
   );
 };
+*/
 
-export default ProjectsPage;

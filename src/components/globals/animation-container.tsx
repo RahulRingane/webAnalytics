@@ -44,7 +44,7 @@ const AnimationContainer = ({
         x: 0,
         scale: 1,
       }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       transition={{
         duration: 0.3,
         delay: delay * 0.2,
