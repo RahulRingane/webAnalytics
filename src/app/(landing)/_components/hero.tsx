@@ -5,9 +5,15 @@ import AnimationContainer from "@/components/globals/animation-container";
 import Wrapper from "@/components/globals/wrapper";
 import Images from "@/components/globals/images";
 import { Button } from "@/components/ui/button";
-import Marquee from "@/components/ui/marquee";
+//import Marquee from "@/components/ui/marquee";
 import SectionBadge from "@/components/ui/section-badge";
-import { Heading } from "@/components/globals/heading";
+import {
+  Marquee,
+  MarqueeContent,
+  MarqueeFade,
+  MarqueeItem,
+} from '@/components/ui/shadcn-io/marquee';
+
 
 const Hero = () => {
   const languages = [
@@ -31,11 +37,9 @@ const Hero = () => {
             </AnimationContainer>
 
             <AnimationContainer animation="fadeUp" delay={0.4}>
-              <Heading>
               <h1 className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-5xl lg:text-6xl !leading-tight">
                 {"Unlock Your Website's Potential"}
               </h1>
-              </Heading>
             </AnimationContainer>
 
             <AnimationContainer animation="fadeUp" delay={0.6}>
@@ -63,15 +67,19 @@ const Hero = () => {
                 Powering Insights with Cutting-Edge Technology
               </p>
               <div className="relative w-full max-w-[calc(100vw-2rem)] lg:max-w-lg">
-                <Marquee className="select-none [--duration:30s] [--gap:2rem]">
-                  {languages.map((Company, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-center items-center h-16 text-muted-foreground"
-                    >
-                      <Company className="grayscale-[1] w-auto h-12" />
-                    </div>
-                  ))}
+                <Marquee>
+                  <MarqueeFade side="left" />
+                  <MarqueeFade side="right" />
+                  <MarqueeContent>
+                    {languages.map((Company, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-center items-center mx-4 h-16 text-muted-foreground"
+                      >
+                        <Company className="grayscale-[1] w-auto h-12" />
+                      </div>
+                    ))}
+                  </MarqueeContent>
                 </Marquee>
                 <div className="-right-1 z-40 absolute inset-y-0 bg-gradient-to-l from-[#101010] w-1/3 pointer-events-none"></div>
                 <div className="-left-1 z-40 absolute inset-y-0 bg-gradient-to-r from-[#101010] w-1/3 pointer-events-none"></div>
