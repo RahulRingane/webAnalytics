@@ -5,7 +5,7 @@ import { SubHeading } from "@/components/globals/SubHeading";
 
 
 type Props = {
-  project?: Project;
+  project?: string;
   title: string;
 };
 
