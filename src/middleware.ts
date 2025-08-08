@@ -27,10 +27,12 @@ export default auth((req: any) => {
   }
 
   if (isAuthRoute && isAuthenticated)
-    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.url));
+    console.log(req.url) 
 
   if (!isAuthenticated && !isAuthRoute)
-    return NextResponse.redirect(new URL("/signin", nextUrl));
+    return NextResponse.redirect(new URL("/signin", req.url));
+    console.log(req.url) 
 });
 
 export const config = {
