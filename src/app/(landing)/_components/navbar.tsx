@@ -2,72 +2,67 @@
 
 import AnimationContainer from "@/components/globals/animation-container";
 import Wrapper from "@/components/globals/wrapper";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { motion, useTransform, useScroll, useMotionValueEvent, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
+import { Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Github } from "lucide-react";
-import { useState } from "react";
+import DropIn from "@/components/globals/Animation-variants";
+
 
 const Navbar = () => {
-
-  const [scrolled, setScrolled] = useState(false);
-  const { scrollY } = useScroll();
-
-  // Map scrollY to animation ranges
-  const rawY = useTransform(scrollY, [0, 300], [0, 10]);
-  const rawWidth = useTransform(scrollY, [0, 300], ["58%", "50%"]);
-
-  // Smooth those values
-  const y = useSpring(rawY, { stiffness: 150, damping: 20 });
-  const width = useSpring(rawWidth, { stiffness: 150, damping: 20 });
-
-  // Optional state toggle
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 20);
-  });
-
   return (
-    <header className="top-0 z-50 absolute inset-x-0 w-full">
-      <motion.nav
+    <header className="fixed top-0 z-50 absolute inset-x-0 w-full">
+      <DropIn delay={0}>
+      <div
+        className={cn(
+          "flex bg-transparent backdrop-blur-lg self-start items-center justify-between py-4 md: py-6 rounded-2xl border border-[#1E1E1E] relative z-[50] w-full md: max-w-6xl mx-auto mt-2",
+        )}
+      >
+        <Wrapper className="flex justify-between items-center lg:px-4">
+          <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            style={{
-              width,
-              y,
-            }}
             transition={{
-              duration: 0.2,
-              ease: "easeInOut"
+              type: "spring",
+              stiffness: 200, // controls the speed
+              damping: 20,    // lower value = more bounce
+              duration: 0.3   // optional, usually spring ignores duration
             }}
-            className="fixed backdrop-blur bg-opacity inset-x-0 top-0 z-50 mx-auto flex max-w-7xl flex items-center justify-between rounded-full px-3 py-6">
-            <Wrapper className="flex justify-between items-center lg:px-4">
-        
+          >
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/logo.svg" width={28} height={28} alt="Logo" />
-              <span className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-xl">
-                Analytics
+              <Image src="/fina-logo.png" width={28} height={28} alt="Logo" />
+              <span className="text-lg md:text-2xl font-bold tracking-tight text-[#f9fafb] md:block">
+                Weblytics
               </span>
             </Link>
+          </motion.div>
 
-
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 200, // controls the speed
+              damping: 10,    // lower value = more bounce
+              duration: 0.4   // optional, usually spring ignores duration
+            }}
+          >
             <div className="flex items-center gap-x-4">
               <Link
-                href="https://github.com/RahulRingane/webAnalytics"
+                href="https://github.com/Mihir2423/analytics"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <button
-                  className="flex items-center gap-2 bg-gradient-to-b from-[#834747] via-[#a05151] to-[#893e3e] px-4 py-1 rounded-md text-white text-sm text-shadow-lg"
-                >
-                  <Github size={16} />
-                  Star us on GitHub
+                <button className="flex items-center gap-2 bg-[#f9fafb] hover:bg-[#f9fafb]/90 px-8 py-1 rounded-md text-primary text-sm text-shadow-md font-medium h-10 cursor-pointer">
+                  Login
                 </button>
               </Link>
-              </div>
+            </div>
+          </motion.div>
         </Wrapper>
-    </motion.nav>
+      </div>
+      </DropIn>
     </header>
   );
 };

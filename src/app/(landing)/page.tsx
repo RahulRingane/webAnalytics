@@ -3,30 +3,29 @@ import Hero from "./_components/hero";
 import Perks from "./_components/features";
 import FAQ from "./_components/faq";
 import CTA from "./_components/cta";
+import Svg from "./_components/svg";
+
+
 
 const HomePage = () => {
+
   return (
-    <div className="relative flex flex-col w-full overflow-x-hidden">
-      <section className="w-full">
-        <div
-          className="top-0 left-0 z-[10] absolute w-full h-[200px] rotate-[180deg]"
-          style={{
-            maskImage: "linear-gradient(transparent, black 85%)",
-            backgroundColor: "#c05d5d65",
-          }}
-        />
-        <Hero />
-      </section>
-      <section className="w-full">
-        <Perks />
-      </section>
-      <section className="w-full">
-        <FAQ />
-      </section>
-      <section className="w-full">
-        <CTA />
-      </section>
-    </div>
+    <div className="relative flex flex-col w-full overflow-x-hidden bg-[#0a0a0a]">
+  <section className="relative z-10 w-full">
+   <Svg/>
+    <Hero />
+  </section>
+  <section className="w-full">
+    <Perks />
+  </section>
+  <section className="w-full">
+    <FAQ />
+  </section>
+  <section className="w-full bg-[#0a0a0a]">
+    <CTA />
+  </section>
+</div>
+
   );
 };
 

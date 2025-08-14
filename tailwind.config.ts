@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-const config = {
+const config: Config = {
   darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -77,36 +77,24 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
         marquee: {
-          from: {
-            transform: "translateX(0)",
-          },
-          to: {
-            transform: "translateX(calc(-100% - var(--gap)))",
-          },
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
         },
         "marquee-vertical": {
-          from: {
-            transform: "translateY(0)",
-          },
-          to: {
-            transform: "translateY(calc(-100% - var(--gap)))",
-          },
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
+        },
+        spotlight: {
+          "0%": { transform: "translateY(-40%) scale(0.8)", opacity: "0" },
+          "100%": { transform: "translateY(0) scale(1)", opacity: "1" },
         },
       },
       animation: {
@@ -114,14 +102,14 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
         marquee: "marquee var(--duration) linear infinite",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
+        spotlight: "spotlight 2s ease .75s forwards",
       },
       spacing: {
         "1/8": "12.5%",
       },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+};
 
 export default config;

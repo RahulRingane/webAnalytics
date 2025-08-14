@@ -25,14 +25,15 @@ const CTA = () => {
   return (
     <Wrapper className="py-20 lg:py-32">
       <div className="z-0 relative flex flex-col items-center gap-4 py-20 lg:py-32 overflow-hidden text-center">
-        <div className="bottom-0 z-10 absolute inset-x-0 bg-gradient-to-t from-[#101010] w-full h-1/2"></div>
+        <div className="bottom-0 z-10 absolute inset-x-0 w-full h-1/2"></div>
 
         <AnimationContainer
           animation="scaleUp"
           delay={0.2}
           className="mx-auto w-full"
         >
-          <div className="-top-1/2 absolute inset-x-0 bg-[#f99494e2] blur-[4rem] lg:blur-[10rem] mx-auto rounded-full size-1/2"></div>
+          <div className="-top-1/2 absolute inset-x-0 bg-[#3b82f6e2] blur-[4rem] lg:blur-[10rem] mx-auto rounded-full size-1/2"></div>
+
         </AnimationContainer>
 
         <AnimationContainer animation="scaleUp" delay={0.3}>
@@ -89,7 +90,7 @@ const CTA = () => {
             <Link href="/projects">
               <Button
                 size="lg"
-                className="bg-[#C05D5D] hover:bg-[#c05d5dcb] mt-6 text-shadow-md"
+                className="bg-gradient-to-b from-blue-600 hover:to-blue-700 hover:from-blue-600 to-blue-500 mt-6 text-shadow-md"
               >
                 Get Started
                 <ArrowRightIcon className="ml-2 size-4" />

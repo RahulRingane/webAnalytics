@@ -7,10 +7,13 @@ export default function PageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <main className="relative bg-[#101010] w-full">
-      <Navbar />
+    <>
+    
+    <main className="relative bg-[#0a0a0a] w-full">
+      <Navbar/>
       {children}
       <Footer />
     </main>
+    </>
   );
 }

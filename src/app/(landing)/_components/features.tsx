@@ -64,7 +64,8 @@ const FeaturesSection = () => {
                       alt={feature.title}
                       width={1024}
                       height={1024}
-                      className="size-8 lg:size-10"
+                      className="size-8 lg:size-10 object-cover scale-150"
+                      style={{ transformOrigin: "center" }}
                     />
                   </div>
                   <div className="space-y-2">
