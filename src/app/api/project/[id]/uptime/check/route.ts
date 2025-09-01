@@ -72,8 +72,8 @@ setInterval(async () => {
       }
 
       console.log(`✅ Flushed check for ${project.name}`);
-    } catch (err: any) {
-      console.error(`❌ Failed to flush check for ${check.url}:`, err.message);
+    } catch (err) {
+      console.error(`❌ Failed to flush check for ${check.url}:`, err);
     }
   }
 }, 5 * 60 * 1000);

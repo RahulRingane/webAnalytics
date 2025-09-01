@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import type { Project, WsUpdate } from "@/types";
+import { Check } from "@prisma/client";
 
 interface UptimeCardProps {
   project: Project;
@@ -23,7 +24,7 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
         const res = await fetch(`/api/project/${project.id}/uptime?limit=29`);
         if (!res.ok) throw new Error("Failed to fetch recent ticks");
         const data = await res.json();
-        const recentStatuses = data.checks.map((c: any) => c.status).slice(-29);
+        const recentStatuses = data.checks.map((c: Check) => c.status).slice(-29);
         setChecks([...recentStatuses]);
       } catch (err) {
         console.error("Error fetching recent ticks:", err);

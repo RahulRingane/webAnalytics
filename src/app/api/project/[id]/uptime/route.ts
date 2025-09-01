@@ -88,9 +88,9 @@ export  async function GET(req: NextRequest,
             { project, checks, uptime }, { status: 200 }
         )
 
-    } catch (error: any) {
+    } catch (error) {
         return NextResponse.json(
-            { message: error.message || "Internal server error" }
+            { "Internal server error": error }
         )
     }
 }
