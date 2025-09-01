@@ -10,19 +10,19 @@ export const getProjects = async (userId: string) => {
   return res;
 };
 
-export const getDomainProject = async (domain: string) => {
+export const getDomainProject = async (id: string) => {
   const res = await prisma.project.findFirst({
     where: {
-      domain,
+      id,
     },
   });
   return res;
 };
 
-export const getDomainAnalytics = async (domain: string) => {
+export const getDomainAnalytics = async (id: string) => {
   const res = await prisma.project.findFirst({
     where: {
-      domain,
+      id,
     },
     include: {
       analytics: {

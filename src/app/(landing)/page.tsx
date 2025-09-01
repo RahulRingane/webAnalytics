@@ -21,7 +21,7 @@ const HomePage = () => {
   <section className="w-full">
     <FAQ />
   </section>
-  <section className="w-full bg-[#0a0a0a]">
+  <section className="w-full">
     <CTA />
   </section>
 </div>

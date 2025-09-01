@@ -27,15 +27,15 @@ export const getAllProjects = async (id: string | undefined) => {
   }
 };
 
-export const getProjectByDomain = async (domain: string | null) => {
-  if (!domain) {
+export const getProjectByDomain = async (id: string | null) => {
+  if (!id) {
     return null;
   }
   try {
-    const res = await getDomainProject(domain);
+    const res = await getDomainProject(id);
     return res;
   } catch (error) {
-    console.error(`Error fetching project for domain ${domain}:`, error);
+    console.error(`Error fetching project for domain ${id}:`, error);
     return null;
   }
 };

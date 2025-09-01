@@ -1,5 +1,28 @@
 -- CreateEnum
+CREATE TYPE "HttpMethod" AS ENUM ('GET', 'POST', 'PUT', 'DELETE', 'HEAD');
+
+-- CreateEnum
+CREATE TYPE "MonitorStatus" AS ENUM ('up', 'down', 'pending');
+
+-- CreateEnum
+CREATE TYPE "Status" AS ENUM ('up', 'down');
+
+-- CreateEnum
 CREATE TYPE "DeviceType" AS ENUM ('DESKTOP', 'MOBILE', 'TABLET');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "email" TEXT NOT NULL,
+    "emailVerified" TIMESTAMP(3),
+    "image" TEXT,
+    "role" TEXT NOT NULL DEFAULT 'USER',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Project" (
@@ -8,10 +31,46 @@ CREATE TABLE "Project" (
     "name" TEXT NOT NULL,
     "description" TEXT,
     "ownerId" TEXT NOT NULL,
+    "url" TEXT NOT NULL DEFAULT 'http://demo.com',
+    "method" "HttpMethod" NOT NULL DEFAULT 'GET',
+    "headers" JSONB NOT NULL DEFAULT '{}',
+    "body" TEXT NOT NULL DEFAULT '',
+    "interval" INTEGER NOT NULL DEFAULT 5,
+    "timeout" INTEGER NOT NULL DEFAULT 30,
+    "expectedStatusCode" INTEGER NOT NULL DEFAULT 200,
+    "active" BOOLEAN NOT NULL DEFAULT true,
+    "lastChecked" TIMESTAMP(3),
+    "status" "MonitorStatus" NOT NULL DEFAULT 'pending',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Project_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Check" (
+    "id" TEXT NOT NULL,
+    "projectId" TEXT NOT NULL,
+    "status" "Status" NOT NULL,
+    "responseTime" INTEGER NOT NULL,
+    "statusCode" INTEGER,
+    "timestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Check_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "incidents" (
+    "id" TEXT NOT NULL,
+    "projectId" TEXT NOT NULL,
+    "startTime" TIMESTAMP(3) NOT NULL,
+    "endTime" TIMESTAMP(3),
+    "duration" DOUBLE PRECISION,
+    "reason" TEXT,
+    "statusCode" INTEGER,
+    "resolved" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "incidents_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -89,11 +148,92 @@ CREATE TABLE "SourceAnalytics" (
     CONSTRAINT "SourceAnalytics_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Account" (
+    "userId" TEXT NOT NULL,
+    "type" TEXT NOT NULL,
+    "provider" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "refresh_token" TEXT,
+    "access_token" TEXT,
+    "expires_at" INTEGER,
+    "token_type" TEXT,
+    "scope" TEXT,
+    "id_token" TEXT,
+    "session_state" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Account_pkey" PRIMARY KEY ("provider","providerAccountId")
+);
+
+-- CreateTable
+CREATE TABLE "Session" (
+    "sessionToken" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "VerificationToken" (
+    "identifier" TEXT NOT NULL,
+    "token" TEXT NOT NULL,
+    "expires" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "VerificationToken_pkey" PRIMARY KEY ("identifier","token")
+);
+
+-- CreateTable
+CREATE TABLE "Authenticator" (
+    "credentialID" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "providerAccountId" TEXT NOT NULL,
+    "credentialPublicKey" TEXT NOT NULL,
+    "counter" INTEGER NOT NULL,
+    "credentialDeviceType" TEXT NOT NULL,
+    "credentialBackedUp" BOOLEAN NOT NULL,
+    "transports" TEXT,
+
+    CONSTRAINT "Authenticator_pkey" PRIMARY KEY ("userId","credentialID")
+);
+
+-- CreateTable
+CREATE TABLE "BugReport" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'inReview',
+    "ownerId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "BugReport_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Log" (
+    "id" TEXT NOT NULL,
+    "message" TEXT NOT NULL,
+    "level" TEXT NOT NULL DEFAULT 'info',
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Log_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
 -- CreateIndex
 CREATE UNIQUE INDEX "Project_domain_key" ON "Project"("domain");
 
 -- CreateIndex
 CREATE INDEX "Project_ownerId_idx" ON "Project"("ownerId");
+
+-- CreateIndex
+CREATE INDEX "Check_projectId_timestamp_idx" ON "Check"("projectId", "timestamp" DESC);
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Analytics_projectId_key" ON "Analytics"("projectId");
@@ -137,8 +277,20 @@ CREATE INDEX "SourceAnalytics_analyticsId_idx" ON "SourceAnalytics"("analyticsId
 -- CreateIndex
 CREATE UNIQUE INDEX "SourceAnalytics_analyticsId_sourceName_key" ON "SourceAnalytics"("analyticsId", "sourceName");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Session_sessionToken_key" ON "Session"("sessionToken");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Authenticator_credentialID_key" ON "Authenticator"("credentialID");
+
 -- AddForeignKey
 ALTER TABLE "Project" ADD CONSTRAINT "Project_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Check" ADD CONSTRAINT "Check_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "incidents" ADD CONSTRAINT "incidents_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Analytics" ADD CONSTRAINT "Analytics_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "Project"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -160,3 +312,15 @@ ALTER TABLE "OSAnalytics" ADD CONSTRAINT "OSAnalytics_analyticsId_fkey" FOREIGN 
 
 -- AddForeignKey
 ALTER TABLE "SourceAnalytics" ADD CONSTRAINT "SourceAnalytics_analyticsId_fkey" FOREIGN KEY ("analyticsId") REFERENCES "Analytics"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Authenticator" ADD CONSTRAINT "Authenticator_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "BugReport" ADD CONSTRAINT "BugReport_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

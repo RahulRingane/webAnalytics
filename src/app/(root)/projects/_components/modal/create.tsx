@@ -90,7 +90,7 @@ export const CreateModal = memo(() => {
               <Package size={18} className="ml-2 text-[#626366]" />
               <Input
                 style={{ fontSize: "24px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-white placeholder:text-[24px] placeholder:text-[#626366]"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-black placeholder:text-[24px] placeholder:text-[#626366]"
                 placeholder="Project name"
                 name="name"
                 value={data.name}
@@ -98,7 +98,7 @@ export const CreateModal = memo(() => {
               />
               <Input
                 style={{ fontSize: "16px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-white placeholder:text-[16px] placeholder:text-[#626366]"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-black placeholder:text-[16px] placeholder:text-[#626366]"
                 placeholder="Domain (mihircodes.in)"
                 name="domain"
                 value={data.domain}
@@ -108,7 +108,7 @@ export const CreateModal = memo(() => {
             <div className="mt-4">
               <Textarea
                 style={{ fontSize: "14px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-white placeholder:text-[14px] placeholder:text-[#626366] resize-none"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-black placeholder:text-[14px] placeholder:text-[#626366] resize-none"
                 placeholder="Write a description, a project brief..."
                 name="description"
                 value={data.description}

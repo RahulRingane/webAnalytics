@@ -61,3 +61,27 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    const session = await auth();
+    if (!session) {
+      return NextResponse.json(
+        { message: "Unauthorized", success: false },
+        { status: 403 }
+      );
+    }
+
+    const projects = await prisma.project.findMany({
+      where: { ownerId: session.user.id },
+    });
+
+    return NextResponse.json(projects, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching projects", error);
+    return NextResponse.json(
+      { message: "Internal Server Error", success: false },
+      { status: 500 }
+    );
+  }
+}

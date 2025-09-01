@@ -166,8 +166,8 @@ export async function POST(req: NextRequest) {
       referrer,
       path,
     } = payload;
-    const domain = "rahulringane.github.io/index";
-    console.log(domain, "visitorId");
+    const domain = "https://rahulringane.github.io/index/";
+    console.log(domain, url, "visitorId");
 
     if (!url.includes(domain)) {
       console.log("hiiiii");
@@ -180,10 +180,13 @@ export async function POST(req: NextRequest) {
       );
     }
     console.log("mid");
-    const projectExist = await prisma.project.findUnique({
-      where: { domain: domain },
+    const projectExist = await prisma.project.findFirst({
+      where: { domain: `${domain}` },
     });
+    console.log("project not founds", domain)
+    console.log(projectExist, "pexist")
     if (!projectExist) {
+      console.log("project not founds")
       return NextResponse.json(
         {
           error:

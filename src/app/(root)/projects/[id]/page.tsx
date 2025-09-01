@@ -11,29 +11,31 @@ import { ProjectData } from "../_components/project-data";
 import WebsiteDetailSkeleton from "../_components/website-skeleton";
 
 type Props = {
-  params: Promise<{ website: string }>;
+  params: Promise<{ id: string }>;
 };
 
 const WebsiteDetailPage = async ({ params }: Props) => {
-  const { website } = await params;
-  const decodedWebsite = decodeURIComponent(website);
+  const { id } = await params;
   return (
     <ProjectProvider>
       <Suspense fallback={<WebsiteDetailSkeleton />}>
-        <WebsiteDetail website={decodedWebsite} />
+        <WebsiteDetail id={id} />
       </Suspense>
     </ProjectProvider>
   );
 };
 
-const WebsiteDetail = async ({ website }: { website: string }) => {
-  const websiteData = await getAnalytics(website);
-  console.log(websiteData, "websitedata");
+const WebsiteDetail = async ({ id }: { id: string }) => {
+  console.log(id, "id")
+  const websiteData = await getAnalytics(id);
+  console.log(websiteData, "project analytics data");
+
   const tabs = [
     { id: "metadata", label: "Metadata" },
     { id: "analytics", label: "Analytics" },
     { id: "issues", label: "Issues" },
   ];
+
   return !websiteData ? (
     <div className="flex justify-center items-center w-full h-screen">
       <MetadataError />
@@ -43,7 +45,7 @@ const WebsiteDetail = async ({ website }: { website: string }) => {
       <Header title="Your Projects" project={websiteData?.name} />
       <div className="p-5 lg:px-32 lg:py-10">
         <ProjectData
-          website={website}
+          website={id}
           websiteData={{
             name: websiteData?.name,
             description: websiteData?.description,
@@ -51,7 +53,7 @@ const WebsiteDetail = async ({ website }: { website: string }) => {
         />
         <div className="flex flex-col gap-4 py-4">
           <AnimatedTabs tabs={tabs} />
-          <Metadata domain={website} />
+          <Metadata domain={websiteData?.name} />
           <Analytics analytics={websiteData?.analytics} />
           <Issues />
         </div>
