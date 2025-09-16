@@ -12,6 +12,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
+	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 )
 
@@ -77,21 +78,26 @@ func handleBroadcast() {
 	}
 }
 
-func checkWebsite(domain string) string {
+func checkWebsite(domain string) (status string, responseTime int64, statusCode int) {
+	start := time.Now()
 	client := http.Client{Timeout: 15 * time.Second}
 	resp, err := client.Get(domain)
+	elapsed := time.Since(start).Milliseconds()
+
 	if err != nil {
-		return "down"
+		return "down", elapsed, 0
 	}
+
 	defer resp.Body.Close()
 
 	if resp.StatusCode >= 200 && resp.StatusCode < 400 {
-		return "up"
+		return "up", elapsed, resp.StatusCode
 	}
-	return "down"
+	return "down", elapsed, 0
 }
 
 func main() {
+	godotenv.Load()
 	db.ConnectDB()
 
 	go handleBroadcast()
@@ -109,7 +115,7 @@ func main() {
 	checkTicker := time.NewTicker(30 * time.Second)
 	defer checkTicker.Stop()
 
-	flushTicker := time.NewTicker(50 * time.Minute)
+	flushTicker := time.NewTicker(1 * time.Minute)
 	defer flushTicker.Stop()
 
 	for {
@@ -126,13 +132,15 @@ func main() {
 				wg.Add(1)
 				go func(p models.Project) {
 					defer wg.Done()
-					status := checkWebsite(p.Domain)
+					status, responseTime, statusCode := checkWebsite(p.Domain)
 
 					check := models.Check{
-						ID:        uuid.New().String(),
-						ProjectID: p.ID,
-						Status:    status,
-						Timestamp: time.Now(),
+						ID:           uuid.New().String(),
+						ProjectID:    p.ID,
+						Status:       status,
+						Timestamp:    time.Now().Local(),
+						ResponseTime: func(rt int64) *int { i := int(rt); return &i }(responseTime),
+						StatusCode:   func(sc int) *int { return &sc }(statusCode),
 					}
 
 					mu.Lock()

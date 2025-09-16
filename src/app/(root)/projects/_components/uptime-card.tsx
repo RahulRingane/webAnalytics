@@ -10,7 +10,7 @@ interface UptimeCardProps {
 }
 
 const MAX_TICKS = 30;
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? "ws://localhost:8080/ws";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || " "
 
 const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   const [status, setStatus] = useState(project.status);
@@ -35,7 +35,7 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   // WebSocket for live updates
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
-
+    console.log("wss", WS_URL)
     ws.onopen = () => console.log("✅ WebSocket connected");
     ws.onclose = () => console.log("❌ WebSocket closed");
     ws.onerror = (err) => console.error("WebSocket error:", err);

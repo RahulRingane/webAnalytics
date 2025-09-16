@@ -2,7 +2,8 @@ package db
 
 import (
 	"log"
-	//"os"
+	"os"
+	"time"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -11,10 +12,16 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() {
-	dsn := "postgresql://neondb_owner:9yeWNtILz0lM@ep-ancient-bird-a11b7x1q-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
-
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		log.Fatal("DATABASE_URL environment variable not set")
+	}
 	var err error
-	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		NowFunc: func() time.Time {
+			return time.Now().Local()
+		},
+	})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
