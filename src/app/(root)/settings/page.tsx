@@ -15,7 +15,7 @@ const SettingsPage = () => {
         <div className="flex flex-col gap-2">
           <h1 className="font-semibold text-white text-3xl">Settings</h1>
           <p className="text-muted-foreground">
-            Manage your account settings and preferences.
+            Manage your account preferences.
           </p>
         </div>
         <AnimatedTabs tabs={tabs} />
