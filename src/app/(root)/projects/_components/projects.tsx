@@ -3,7 +3,6 @@ import { getAllProjects } from "@/use-cases/project";
 import { EmptyProject } from "./empty-project";
 import { ProjectCard } from "./project-card";
 
-
 export default async function Projects() {
   const session = await assertAuthenticated();
   const projects = await getAllProjects(session.id);
@@ -24,7 +23,8 @@ export default async function Projects() {
             key={index}
             data={{
               ...data,
-              description: data.description === null ? undefined : data.description,
+              description:
+                data.description === null ? undefined : data.description,
             }}
           />
         ))}

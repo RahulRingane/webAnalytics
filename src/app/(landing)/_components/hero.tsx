@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -13,8 +11,7 @@ import {
   MarqueeContent,
   MarqueeFade,
   MarqueeItem,
-} from '@/components/ui/shadcn-io/marquee';
-
+} from "@/components/ui/shadcn-io/marquee";
 
 const Hero = () => {
   const languages = [
@@ -34,22 +31,22 @@ const Hero = () => {
         <div className="flex flex-col items-center gap-10 py-8 w-full">
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-col gap-2 text-center">
-            <AnimationContainer animation="fadeUp" delay={0.2}>
-              <h1 className="tracking-tighter text-xl md:text-2xl font-medium text-[#f9fafa]/80">
-                Welcome to
-              </h1>
-            </AnimationContainer>
+              <AnimationContainer animation="fadeUp" delay={0.2}>
+                <h1 className="tracking-tighter text-xl md:text-2xl font-medium text-[#f9fafa]/80">
+                  Welcome to
+                </h1>
+              </AnimationContainer>
 
-            <AnimationContainer animation="fadeUp" delay={0.4}>
-              <div className="flex">
-                <span className="bg-clip-text bg-gradient-to-b from-blue-400 to-blue-700 font-bold text-center text-transparent text-5xl lg:text-6xl !leading-tight mr-5">
-                  {"Web"}
-                </span>
-                <span className="text-[#f9fafa]/80 font-bold text-center text-5xl lg:text-6xl !leading-tight">
-                  {"Analytics"}
-                </span>
-              </div>
-            </AnimationContainer>
+              <AnimationContainer animation="fadeUp" delay={0.4}>
+                <div className="flex">
+                  <span className="bg-clip-text bg-gradient-to-b from-blue-400 to-blue-700 font-bold text-center text-transparent text-5xl lg:text-6xl !leading-tight mr-5">
+                    {"Web"}
+                  </span>
+                  <span className="text-[#f9fafa]/80 font-bold text-center text-5xl lg:text-6xl !leading-tight">
+                    {"Analytics"}
+                  </span>
+                </div>
+              </AnimationContainer>
             </div>
 
             <AnimationContainer animation="fadeUp" delay={0.6}>
@@ -123,9 +120,6 @@ const Hero = () => {
 };
 
 export default Hero;
-
-
-
 
 /*import Image from "next/image";
 import Link from "next/link";

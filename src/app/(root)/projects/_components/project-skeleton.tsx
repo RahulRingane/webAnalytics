@@ -8,9 +8,9 @@ export const ProjectSkelteon = () => {
         <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
         <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
         <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
-         <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
-          <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
-           <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
+        <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
+        <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
+        <Skeleton className="bg-slate-500 border border-[#27282D] rounded-md w-full h-[100px]" />
       </div>
     </div>
   );

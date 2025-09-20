@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 import { NextRequest, NextResponse } from "next/server";
 import { DeviceType } from "@prisma/client";
 import { UAParser } from "ua-parser-js";
@@ -183,10 +183,10 @@ export async function POST(req: NextRequest) {
     const projectExist = await prisma.project.findFirst({
       where: { domain: `${domain}` },
     });
-    console.log("project not founds", domain)
-    console.log(projectExist, "pexist")
+    console.log("project not founds", domain);
+    console.log(projectExist, "pexist");
     if (!projectExist) {
-      console.log("project not founds")
+      console.log("project not founds");
       return NextResponse.json(
         {
           error:

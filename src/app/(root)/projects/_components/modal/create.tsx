@@ -33,7 +33,7 @@ export const CreateModal = memo(() => {
         [e.target.name]: e.target.value,
       }));
     },
-    []
+    [],
   );
 
   const onSubmit = useCallback(async () => {
@@ -48,10 +48,10 @@ export const CreateModal = memo(() => {
       }
       toast.success("Project created successfully");
       router.refresh();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Error creating project:", error);
-      toast.error(error?.response?.data?.message ||  "Error creating project");
+      toast.error(error?.response?.data?.message || "Error creating project");
     } finally {
       setCreating(false);
       setData({ name: "", domain: "", description: "" });

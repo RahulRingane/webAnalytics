@@ -218,12 +218,10 @@ export async function PATCH(
   }
 }
 
-
 export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> },
 ) {
-
   const { id } = await params;
   try {
     const session = await auth();
@@ -249,10 +247,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(
-      { project, success: true },
-      { status: 200 },
-    );
+    return NextResponse.json({ project, success: true }, { status: 200 });
   } catch (error) {
     console.error("Error fetching project:", error);
     return NextResponse.json(

@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -10,11 +9,13 @@ interface UptimeCardProps {
 }
 
 const MAX_TICKS = 30;
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || " "
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || " ";
 
 const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   const [status, setStatus] = useState(project.status);
-  const [checks, setChecks] = useState<string[]>(Array(MAX_TICKS - 1).fill("unknown")); // recent 29 from API
+  const [checks, setChecks] = useState<string[]>(
+    Array(MAX_TICKS - 1).fill("unknown"),
+  ); // recent 29 from API
   const [lastChecked, setLastChecked] = useState(project.lastChecked);
 
   // Fetch recent 29 ticks on mount
@@ -24,7 +25,9 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
         const res = await fetch(`/api/project/${project.id}/uptime?limit=29`);
         if (!res.ok) throw new Error("Failed to fetch recent ticks");
         const data = await res.json();
-        const recentStatuses = data.checks.map((c: Check) => c.status).slice(-29);
+        const recentStatuses = data.checks
+          .map((c: Check) => c.status)
+          .slice(-29);
         setChecks([...recentStatuses]);
       } catch (err) {
         console.error("Error fetching recent ticks:", err);
@@ -35,7 +38,7 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   // WebSocket for live updates
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
-    console.log("wss", WS_URL)
+    console.log("wss", WS_URL);
     ws.onopen = () => console.log("✅ WebSocket connected");
     ws.onclose = () => console.log("❌ WebSocket closed");
     ws.onerror = (err) => console.error("WebSocket error:", err);
@@ -58,13 +61,15 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   }, [project.id]);
 
   const ticks = Array.from({ length: MAX_TICKS }).map(
-    (_, i) => checks[i] ?? "unknown"
+    (_, i) => checks[i] ?? "unknown",
   );
 
   return (
     <div className="bg-[#222531] shadow-md rounded-lg p-6 max-w-5xl items-start">
       <div className="h-8 w-18 bg-[#1E274F] rounded-lg flex justify-center items-center mb-2 px-2 border border-radius-300 border-[#1E274F]">
-      <h2 className="text-lg text-[#FFFFFF] font-semibold text-center text-shadow-lg" >{project.name}</h2>
+        <h2 className="text-lg text-[#FFFFFF] font-semibold text-center text-shadow-lg">
+          {project.name}
+        </h2>
       </div>
       <p className="text-gray-400 mb-4 text-lg">URL: {project.url}</p>
 
@@ -77,8 +82,8 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
               tick === "up"
                 ? "bg-green-500 border-green-600"
                 : tick === "down"
-                ? "bg-red-500 border-red-600"
-                : "bg-gray-300 border-gray-400"
+                  ? "bg-red-500 border-red-600"
+                  : "bg-gray-300 border-gray-400"
             }`}
           />
         ))}
@@ -92,8 +97,8 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
             status === "up"
               ? "text-green-600"
               : status === "down"
-              ? "text-red-600"
-              : "text-gray-500"
+                ? "text-red-600"
+                : "text-gray-500"
           }`}
         >
           {status}
@@ -111,5 +116,3 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
 };
 
 export default UptimeCard;
-
-

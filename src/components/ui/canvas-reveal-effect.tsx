@@ -2,12 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import React, {
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-} from "react";
+import React, { useMemo, useRef, useCallback, useState } from "react";
 import * as THREE from "three";
 
 export const CanvasRevealEffect = ({
@@ -71,9 +66,23 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
     let colorsArray = Array(6).fill(colors[0]);
 
     if (colors.length === 2) {
-      colorsArray = [colors[0], colors[0], colors[0], colors[1], colors[1], colors[1]];
+      colorsArray = [
+        colors[0],
+        colors[0],
+        colors[0],
+        colors[1],
+        colors[1],
+        colors[1],
+      ];
     } else if (colors.length === 3) {
-      colorsArray = [colors[0], colors[0], colors[1], colors[1], colors[2], colors[2]];
+      colorsArray = [
+        colors[0],
+        colors[0],
+        colors[1],
+        colors[1],
+        colors[2],
+        colors[2],
+      ];
     }
 
     return {
@@ -132,8 +141,7 @@ const DotMatrix: React.FC<DotMatrixProps> = ({
           ${shader}
           fragColor = vec4(color, opacity);
           fragColor.rgb *= fragColor.a;
-        }`
-      }
+        }`}
       uniforms={uniforms}
       maxFps={60}
     />
@@ -172,7 +180,6 @@ const ShaderMaterial = ({
   });
 
   const getUniforms = useCallback(() => {
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const preparedUniforms: Record<string, any> = {};
 
@@ -194,7 +201,7 @@ const ShaderMaterial = ({
         case "uniform3fv":
           preparedUniforms[name] = {
             value: (uniform.value as number[][]).map((v) =>
-              new THREE.Vector3().fromArray(v)
+              new THREE.Vector3().fromArray(v),
             ),
           };
           break;
@@ -260,4 +267,3 @@ const Shader: React.FC<ShaderProps> = ({ source, uniforms, maxFps = 60 }) => {
     </Canvas>
   );
 };
-

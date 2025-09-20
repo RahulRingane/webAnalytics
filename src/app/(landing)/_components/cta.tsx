@@ -33,7 +33,6 @@ const CTA = () => {
           className="mx-auto w-full"
         >
           <div className="-top-1/2 absolute inset-x-0 bg-[#3b82f6e2] blur-[4rem] lg:blur-[10rem] mx-auto rounded-full size-1/2"></div>
-
         </AnimationContainer>
 
         <AnimationContainer animation="scaleUp" delay={0.3}>

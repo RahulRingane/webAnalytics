@@ -8,12 +8,11 @@ export default function PageLayout({
 }) {
   return (
     <>
-    
-    <main className="relative bg-[#0a0a0a] w-full">
-      <Navbar/>
-      {children}
-      <Footer />
-    </main>
+      <main className="relative bg-[#0a0a0a] w-full">
+        <Navbar />
+        {children}
+        <Footer />
+      </main>
     </>
   );
 }

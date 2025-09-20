@@ -169,4 +169,3 @@ export const ProjectCard = ({ data }: { data: Project }) => {
     </motion.div>
   );
 };
-

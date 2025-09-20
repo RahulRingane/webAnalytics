@@ -57,12 +57,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });*/
 
-import NextAuth from "next-auth"
-import Credentials from "next-auth/providers/credentials"
-import Google from "next-auth/providers/google"
-import prisma from "./lib/db"
-import { compare } from "bcryptjs" // ✅ real compare
-import { Session } from "inspector/promises"
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
+import prisma from "./lib/db";
+import { compare } from "bcryptjs"; 
+import { Session } from "inspector/promises";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
@@ -81,7 +81,10 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
         if (!user) return null;
 
-        const isValid = await compare(credentials.password as string, user.password as string);
+        const isValid = await compare(
+          credentials.password as string,
+          user.password as string,
+        );
         if (!isValid) return null;
 
         return { id: user.id, email: user.email };
@@ -97,28 +100,29 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       if (user) {
-        token.id = user.id
-        token.email = user.email
+        token.id = user.id;
+        token.email = user.email;
       }
       if (account?.provider === "google") {
-        token.accessToken = account.access_token
+        token.accessToken = account.access_token;
       }
 
-       if (account?.access_token) {
+      if (account?.access_token) {
         token.accessToken = account.access_token;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string
-        session.user.email = token.email as string
-        delete (session.user).name
+        session.user.id = token.id as string;
+        session.user.email = token.email as string;
+        delete session.user.name;
       }
       if (token.accessToken) {
-        session.accessToken = token.accessToken
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        session.user.accessToken = token.accessToken;
       }
-      return session
+      return session;
     },
   },
-})
+});

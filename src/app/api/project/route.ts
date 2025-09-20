@@ -11,15 +11,15 @@ export async function POST(req: Request) {
     if (!session) {
       return NextResponse.json(
         { user: null, message: "Unauthorized", success: false },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
-     const values = await req.json();
+    const values = await req.json();
     if (!values.domain || !values.name || !values.description) {
       return NextResponse.json(
         { message: "Missing required fields", success: false },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +29,7 @@ export async function POST(req: Request) {
     if (existingProject) {
       return NextResponse.json(
         { message: "Domain already exists", success: false },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -68,7 +68,7 @@ export async function GET() {
     if (!session) {
       return NextResponse.json(
         { message: "Unauthorized", success: false },
-        { status: 403 }
+        { status: 403 },
       );
     }
 
@@ -81,7 +81,7 @@ export async function GET() {
     console.error("Error fetching projects", error);
     return NextResponse.json(
       { message: "Internal Server Error", success: false },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

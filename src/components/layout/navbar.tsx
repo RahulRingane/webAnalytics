@@ -9,7 +9,7 @@ import Link from "next/link";
 export const Navbar = () => {
   return (
     <nav className="top-0 left-0 z-[3] fixed flex justify-between items-center bg-black backdrop-blur-md px-6 pt-3 pb-3 border-gray-800 border-b w-full">
-     <Link href="/" className="flex items-center gap-2">
+      <Link href="/" className="flex items-center gap-2">
         <Image src="/logo.svg" width={28} height={28} alt="Logo" />
         <span className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-xl">
           Weblytics

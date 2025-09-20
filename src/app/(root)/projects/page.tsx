@@ -1,4 +1,3 @@
-
 import { assertAuthenticated } from "@/lib/session";
 import { getAllProjects } from "@/use-cases/project";
 import { Suspense } from "react";
@@ -11,8 +10,6 @@ import { ProjectCard } from "./_components/project-card";
 import { ProjectSkelteon } from "./_components/project-skeleton";
 import { Heading } from "lucide-react";
 import Projects from "./_components/projects";
-
-
 
 export default async function ProjectsPage() {
   return (
@@ -47,4 +44,3 @@ const Projects = async () => {
   );
 };
 */
-

@@ -5,8 +5,8 @@ import { SidebarProvider } from "@/contexts/sidebar-context";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
- title: "Analytics Dashboard | Web Traffic & Insights",
- description:
+  title: "Analytics Dashboard | Web Traffic & Insights",
+  description:
     "Track and analyze website traffic with detailed insights, user behavior metrics, and performance reports.",
 };
 

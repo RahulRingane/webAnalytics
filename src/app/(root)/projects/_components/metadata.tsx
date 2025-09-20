@@ -66,8 +66,9 @@ export const Metadata = ({ domain }: { domain: string }) => {
 
   return (
     <div
-      className={`flex-col gap-2 p-3 border border-[#383b4183] rounded-lg ${activeTab === "metadata" ? "flex" : "hidden"
-        }`}
+      className={`flex-col gap-2 p-3 border border-[#383b4183] rounded-lg ${
+        activeTab === "metadata" ? "flex" : "hidden"
+      }`}
     >
       {loading ? (
         <MetadataSkeleton />

@@ -6,7 +6,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import Script from "next/script";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -18,9 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
- title: "Analytics Dashboard | Real-Time Business Insights",
- description: "Comprehensive analytics dashboard providing real-time business insights, data visualization, performance metrics, and customizable reporting tools.",
- keywords: "analytics dashboard, business intelligence, data visualization, performance metrics, KPI tracking, real-time analytics, business insights, reporting tools, data analysis",
+  title: "Analytics Dashboard | Real-Time Business Insights",
+  description:
+    "Comprehensive analytics dashboard providing real-time business insights, data visualization, performance metrics, and customizable reporting tools.",
+  keywords:
+    "analytics dashboard, business intelligence, data visualization, performance metrics, KPI tracking, real-time analytics, business insights, reporting tools, data analysis",
 };
 
 export default function RootLayout({

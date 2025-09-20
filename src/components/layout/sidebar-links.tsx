@@ -38,13 +38,13 @@ export const SidebarLink = ({
         <Icon size={16} color={isActive ? iconColor : "#6B7280"} />
         {!isCollapsed && (
           <SubHeading>
-          <span
-            style={{
-              color: isActive ? iconColor : undefined,
-            }}
-          >
-            {label}
-          </span>
+            <span
+              style={{
+                color: isActive ? iconColor : undefined,
+              }}
+            >
+              {label}
+            </span>
           </SubHeading>
         )}
       </Link>

@@ -13,8 +13,8 @@ export type ProjectCheck = {
 export type Project = {
   id: string;
   name: string;
-  url: string;        // full URL (https://example.com)
-  domain?: string;    // optional/plain domain if you keep it
+  url: string; // full URL (https://example.com)
+  domain?: string; // optional/plain domain if you keep it
   status?: UpDownUnknown;
   lastChecked: string | null;
   checks: ProjectCheck[];
@@ -25,7 +25,7 @@ export type WsUpdate = {
   projectId: string;
   checkId: string;
   status: UpDownUnknown;
-  timestamp: string;             // ISO string
+  timestamp: string; // ISO string
   responseTime: number | null;
   statusCode: number | null;
 };

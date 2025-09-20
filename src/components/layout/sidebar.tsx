@@ -19,17 +19,18 @@ export const Sidebar = () => {
 
   return (
     <aside
-      className={`${isCollapsed ? "w-16" : "w-56"
-        } bg-black transition-all duration-300 flex flex-col h-full pb-0`}
+      className={`${
+        isCollapsed ? "w-16" : "w-56"
+      } bg-black transition-all duration-300 flex flex-col h-full pb-0`}
     >
       <div className="flex justify-between items-center gap-2 p-4 pr-0">
         {!isCollapsed && (
           <Link href="/" className="flex items-center gap-2">
             <Image src="/logo.svg" width={28} height={28} alt="Logo" />
             <Heading>
-            <span className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-xl">
-              Weblytics
-            </span>
+              <span className="bg-clip-text bg-gradient-to-r from-white to-neutral-500 font-medium text-transparent text-xl">
+                Weblytics
+              </span>
             </Heading>
           </Link>
         )}
@@ -79,8 +80,9 @@ export const Sidebar = () => {
         <Button
           onClick={async () => await signOut()}
           size="sm"
-          className={`mt-2 text-left w-fit bg-transparent text-sm hover:bg-transparent ${isCollapsed ? "p-2" : ""
-            } text-red-700 `}
+          className={`mt-2 text-left w-fit bg-transparent text-sm hover:bg-transparent ${
+            isCollapsed ? "p-2" : ""
+          } text-red-700 `}
         >
           <LogOut size={20} />
           {!isCollapsed && <span className="ml-2">Logout</span>}
