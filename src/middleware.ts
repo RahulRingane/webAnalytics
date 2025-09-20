@@ -46,7 +46,7 @@ import { DEFAULT_LOGIN_REDIRECT, PUBLIC_ROUTES, AUTH_ROUTES } from "@/routes";
 
 export default async function middleware(req: NextRequest) {
   const { nextUrl } = req;
-  const token = (await cookies()).get("authjs.session-token");
+  const token = (await cookies()).get("__Secure-authjs.session-token");
   const isAuthenticated = !!token;
 
   const pathname = nextUrl.pathname;
