@@ -57,12 +57,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
 });*/
 
+export const runtime = "nodejs";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import prisma from "./lib/db";
 import { compare } from "bcryptjs";
-import { Session } from "inspector/promises";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [
