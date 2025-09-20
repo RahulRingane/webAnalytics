@@ -61,7 +61,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import prisma from "./lib/db";
-import { compare } from "bcryptjs"; 
+import { compare } from "bcryptjs";
 import { Session } from "inspector/promises";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -119,7 +119,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         delete session.user.name;
       }
       if (token.accessToken) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+         
         session.user.accessToken = token.accessToken;
       }
       return session;

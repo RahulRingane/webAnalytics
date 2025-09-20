@@ -43,12 +43,14 @@ export const config = {
 import { NextResponse } from "next/server";
 import { auth } from "./auth";
 import { DEFAULT_LOGIN_REDIRECT, PUBLIC_ROUTES, AUTH_ROUTES } from "@/routes";
+import { cookies } from "next/headers";
 
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
-  const isAuthenticated = !!req.auth;
+  const token =(await cookies()).get("authjs.session-token"); 
+  const isAuthenticated = !!token;
 
-  // ✅ Allow specific paths without auth
+  // Allow specific paths without auth
   if (
     nextUrl.pathname === "/api/track" ||
     nextUrl.pathname === "/tracking-script.js"
@@ -63,22 +65,22 @@ export default auth((req) => {
 
   console.log("isAuthenticated", isAuthenticated, "path:", nextUrl.pathname);
 
-  // ✅ Always allow API & public routes
+  // Always allow API & public routes
   if (isApiRoute || isPublicRoute) {
     return NextResponse.next();
   }
 
-  // ✅ If user is signed in and tries to visit an auth page (e.g. /signin), redirect them
+  // If user is signed in and tries to visit an auth page (e.g. /signin), redirect them
   if (isAuthRoute && isAuthenticated) {
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.url));
   }
 
-  // ✅ If user is not signed in and tries to visit a protected route, redirect to signin
+  // If user is not signed in and tries to visit a protected route, redirect to signin
   if (!isAuthenticated && !isAuthRoute) {
     return NextResponse.redirect(new URL("/signin", req.url));
   }
 
-  // ✅ Otherwise just continue
+  // Otherwise just continue
   return NextResponse.next();
 });
 
