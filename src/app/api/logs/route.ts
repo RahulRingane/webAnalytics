@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const session = await auth();
 
     // Check if the user is authenticated and is an admin
-    if (!session || session.user.role !== "admin") {
+    if (!session) {
       return NextResponse.json(
         {
           message: "Unauthorized: Only admins can create logs",
