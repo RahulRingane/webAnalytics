@@ -9,7 +9,7 @@ interface UptimeCardProps {
 }
 
 const MAX_TICKS = 30;
-const WS_URL =  "ws://localhost:8080/ws";
+const WS_URL =  process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080/ws";
 //process.env.NEXT_PUBLIC_WS_URL ||
 
 const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
