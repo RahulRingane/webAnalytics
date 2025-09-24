@@ -26,7 +26,7 @@ const sidebarLinks: SidebarLinkItem[] = [
   {
     href: "/settings",
     icon: Settings,
-    label: "Settings",
+    label: "Logs",
     iconColor: "#54ffff",
     pattern: /^\/settings/,
   },

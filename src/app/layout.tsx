@@ -33,8 +33,8 @@ export default function RootLayout({
     <html lang="en">
       <Script
         defer
-        data-domain="analytics-code.vercel.app"
-        src="https://analytics-code.vercel.app/tracking-script.js"
+        data-domain="https://web-analytics-l9gi.vercel.app/"
+        src="https://web-analytics-l9gi.vercel.app/tracking-script.js"
       />
       <body
         className={`${geistSans.variable} ${geistMono.variable} a antialiased`}

@@ -82,66 +82,63 @@ export const Incidents = ({ userId }: { userId: string }) => {
       </div>
     );
 
-  return (
-    <div className="flex justify-start">
-      <div className="flex flex-col gap-5 p-5 w-[75%] text-lg">
-         <AnimatedTabs tabs={tabs} />
-        <div className="flex flex-col gap-1.5 font-mono bg-gray-900 rounded-md p-3">
-          {!incidentsByProject[activeTab] ? (
-            <div className="py-3 text-gray-400">No incidents for this project.</div>
-          ) : (
-            incidentsByProject[activeTab].map((incident, index) => {
-              return (
-                <div key={index} className="flex flex-col gap-1">
-                  <div className="flex items-center gap-1.5 text-gray-300 font-bold text-lg">
-                    <AlertTriangle className="w-5 h-5" />
-                    <span>{incident.id}</span>
-                  </div>
-                  <div className="flex flex-wrap gap-3 text-sm justify-between">
-                    <h2 className="text-[#FFFFFF] text-center text-shadow-lg">
-                      statuscode:
-                      <span className={getStatusColor(incident.statusCode)}>
-                        {` ${incident.statusCode}`}
-                      </span>
-                    </h2>
-                    <h2 className="text-[#FFFFFF] text-center text-shadow-lg">
-                      Bug status:
-                      <span className={incident.resolved ? "text-green-400" : "text-red-400"}>
-                        {` ${incident.resolved ? "Resolved" : "Active"}`}
-                      </span>
-                    </h2>
-                    <h2 className="text-[#FFFFFF] text-center text-shadow-lg">
-                      Reason:
-                      <span className="text-gray-400">
-                       {` ${incident.reason || "N/A"}`}
-                      </span>
-                    </h2>
-                    <span className="text-blue-300">
-                      {incident.duration
-                        ? `${Math.floor(incident.duration / 60000)} mins`
-                        : "Unknown"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-gray-500 text-sm">
-                    <span>
-                      Started: {new Date(incident.startTime).toLocaleString()}
-                    </span>
-                    <span>
-                      Ended:{" "}
-                      {incident.endTime
-                        ? new Date(incident.endTime).toLocaleString()
-                        : "Ongoing"}
-                    </span>
-                  </div>
-                  {index < incidentsByProject[activeTab].length - 1 && (
-                    <hr className="border-gray-700 my-1.5" />
-                  )}
-                </div>
-              );
-            })
-          )}
-        </div>
+return (
+  <div className="flex justify-center">
+    <div className="flex flex-col gap-4 p-4 w-full md:w-[75%] text-sm md:text-lg">
+      <AnimatedTabs tabs={tabs} />
+      <div className="flex flex-col gap-2 font-mono bg-gray-900 rounded-md p-3">
+        {!incidentsByProject[activeTab] ? (
+          <div className="py-3 text-gray-400 text-center">No incidents for this project.</div>
+        ) : (
+          incidentsByProject[activeTab].map((incident, index) => (
+            <div key={index} className="flex flex-col gap-2">
+              <div className="flex items-center gap-2 text-gray-300 font-bold text-base md:text-lg">
+                <AlertTriangle className="w-5 h-5" />
+                <span>{incident.id}</span>
+              </div>
+
+              <div className="flex flex-wrap gap-2 md:gap-3 text-sm md:text-base justify-between">
+                <h2 className="text-white text-center">
+                  Status code:
+                  <span className={getStatusColor(incident.statusCode)}>
+                    {` ${incident.statusCode}`}
+                  </span>
+                </h2>
+                <h2 className="text-white text-center">
+                  Bug status:
+                  <span className={incident.resolved ? "text-green-400" : "text-red-400"}>
+                    {` ${incident.resolved ? "Resolved" : "Active"}`}
+                  </span>
+                </h2>
+                <h2 className="text-white text-center">
+                  Reason:
+                  <span className="text-gray-400">{` ${incident.reason || "Bad Response"}`}</span>
+                </h2>
+                <h2 className="text-white text-center">
+                  Duration:{" "} 
+                  <span className="text-blue-300">
+                    {incident.duration
+                      ? ` ${Math.floor(incident.duration / 60000)} mins`
+                      : "Unknown"}
+                  </span>
+                </h2>
+              </div>
+
+              <div className="flex flex-col md:flex-row justify-between text-gray-500 text-xs md:text-sm mt-1">
+                <span>Started: {new Date(incident.startTime).toLocaleString()}</span>
+                <span>
+                  Ended: {incident.endTime ? new Date(incident.endTime).toLocaleString() : "Ongoing"}
+                </span>
+              </div>
+
+              {index < incidentsByProject[activeTab].length - 1 && (
+                <hr className="border-gray-700 my-1.5" />
+              )}
+            </div>
+          ))
+        )}
       </div>
     </div>
-  );
-};
+  </div>
+);
+}

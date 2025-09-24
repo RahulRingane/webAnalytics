@@ -31,7 +31,7 @@ interface TabStore {
 }
 
 export const useTabStore = create<TabStore>((set) => ({
-  activeTab: "metadata",
+  activeTab: "analytics",
   setActiveTab: (tabId) => set({ activeTab: tabId }),
 }));
 

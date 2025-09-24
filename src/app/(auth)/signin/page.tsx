@@ -57,7 +57,7 @@ export default function LoginPage() {
       </div>
 
       {/* Right Side with Login */}
-      <div className="flex w-full md:w-1/2 items-center justify-start px-10">
+      <div className="md:w-1/2 h-screen flex items-center justify-start bg-gradient-to-b from-purple-900 to-gray-900 px-4">
         <Card className="w-full max-w-md border-purple-600 bg-gray-800 bg-opacity-50 p-6">
           <CardHeader>
             <CardTitle className="text-center text-3xl font-bold text-white">
@@ -101,7 +101,12 @@ export default function LoginPage() {
               </Button>
             </form>
 
-            <Separator className="bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+            <div className="w-full relative flex items-center">
+              <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+              <span className="mx-4 text-sm text-gray-400">or</span>
+              <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+            </div>
+
 
             {/* Google login */}
             <Button
@@ -110,7 +115,7 @@ export default function LoginPage() {
               size={"lg"}
               disabled={pending}
             >
-              <FcGoogle className="absolute left-2.5 top-3 size-5" />
+              <FcGoogle className="absolute left-2.5 md:left-18 top-1/2 -translate-y-1/2 size-5" />
               Continue with Google
             </Button>
 

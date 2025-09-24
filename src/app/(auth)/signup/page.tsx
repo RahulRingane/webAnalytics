@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { TriangleAlert } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -15,6 +17,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,6 +52,13 @@ export default function SignupPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+
+  const handleGoogleLogin = async () => {
+    setError(null);
+    setPending(true);
+    await signIn("google", { callbackUrl: "/projects" });
   };
 
   return (
@@ -118,7 +128,22 @@ export default function SignupPage() {
               </Button>
             </form>
 
-            <Separator className="bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+            <div className="w-full relative flex items-center">
+  <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+  <span className="mx-4 text-sm text-gray-400">or</span>
+<Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+</div>
+
+
+            <Button
+              onClick={handleGoogleLogin}
+              className="relative w-full bg-white text-black hover:bg-white/90"
+              size={"lg"}
+              disabled={pending}
+            >
+              <FcGoogle className="absolute left-2.5 md:left-18 top-1/2 -translate-y-1/2 size-5" />
+              Continue with Google
+            </Button>
 
             <p className="text-sm text-center text-gray-300">
               Already have an account?{" "}
