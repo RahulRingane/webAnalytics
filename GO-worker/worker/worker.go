@@ -42,12 +42,12 @@ func removeClient(conn *websocket.Conn) {
 func wsHandler(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		fmt.Println("❌ WebSocket upgrade error:", err)
+		fmt.Println(" WebSocket upgrade error:", err)
 		return
 	}
 
 	addClient(conn)
-	fmt.Println("✅ Client connected, total:", len(clients))
+	fmt.Println(" Client connected, total:", len(clients))
 
 	// Read loop prevents browser disconnect
 	go func(c *websocket.Conn) {
@@ -55,7 +55,7 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 
 		for {
 			if _, _, err := c.ReadMessage(); err != nil {
-				fmt.Println("❌ Client disconnected, total:", len(clients)-1)
+				fmt.Println(" Client disconnected, total:", len(clients)-1)
 				return
 			}
 		}
@@ -68,10 +68,10 @@ func handleBroadcast() {
 		clientsLock.Lock()
 		for client := range clients {
 			if err := client.WriteJSON(check); err != nil {
-				fmt.Println("❌ Broadcast write error:", err)
+				fmt.Println(" Broadcast write error:", err)
 				removeClient(client)
 			} else {
-				fmt.Printf("📤 Broadcasted ProjectID=%s Status=%s to %d clients\n", check["projectId"], check["status"], len(clients))
+				fmt.Printf(" Broadcasted ProjectID=%s Status=%s to %d clients\n", check["projectId"], check["status"], len(clients))
 			}
 		}
 		clientsLock.Unlock()
@@ -103,9 +103,9 @@ func main() {
 	go handleBroadcast()
 	http.HandleFunc("/ws", wsHandler)
 	go func() {
-		fmt.Println("🚀 WebSocket server started on :8080/ws")
+		fmt.Println(" WebSocket server started on :8080/ws")
 		if err := http.ListenAndServe("0.0.0.0:8080", nil); err != nil {
-			fmt.Println("❌ WebSocket server error:", err)
+			fmt.Println(" WebSocket server error:", err)
 		}
 	}()
 
@@ -115,7 +115,7 @@ func main() {
 	checkTicker := time.NewTicker(30 * time.Second)
 	defer checkTicker.Stop()
 
-	flushTicker := time.NewTicker(1 * time.Minute)
+	flushTicker := time.NewTicker(10 * time.Minute)
 	defer flushTicker.Stop()
 
 	for {
@@ -123,7 +123,7 @@ func main() {
 		case <-checkTicker.C:
 			var projects []models.Project
 			if err := db.DB.Find(&projects).Error; err != nil {
-				fmt.Println("❌ Failed to fetch projects:", err)
+				fmt.Println(" Failed to fetch projects:", err)
 				continue
 			}
 
@@ -182,7 +182,7 @@ func main() {
 			mu.Unlock()
 			if len(toFlush) > 0 {
 				db.DB.CreateInBatches(toFlush, 100)
-				fmt.Printf("✅ Flushed %d checks\n", len(toFlush))
+				fmt.Printf(" Flushed %d checks\n", len(toFlush))
 			}
 		}
 	}

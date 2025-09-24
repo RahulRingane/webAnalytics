@@ -1,3 +1,5 @@
+import { Analytics } from "@prisma/client";
+
 // /types.ts
 export type UpDownUnknown = "up" | "down" | "unknown";
 
@@ -18,6 +20,7 @@ export type Project = {
   status?: UpDownUnknown;
   lastChecked: string | null;
   checks: ProjectCheck[];
+  analytics: Analytics
 };
 
 // WebSocket message we expect from the worker

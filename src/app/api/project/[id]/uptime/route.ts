@@ -1,4 +1,4 @@
-import prisma from "@/lib/db";
+ import prisma from "@/lib/db";
 import { auth } from "@/auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -158,7 +158,7 @@ export async function DELETE(
       },
     });
 
-    // Project deleted successfully, you can return a response if needed
+    // Project deleted
     return NextResponse.json(
       { message: "Project deleted successfully", deletedProject: result },
       { status: 200 },

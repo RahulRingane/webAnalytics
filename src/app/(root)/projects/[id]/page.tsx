@@ -1,65 +1,110 @@
+"use client"
 import { ProjectProvider } from "@/contexts/project-context";
-import { getAnalytics } from "@/use-cases/project";
-import { Suspense } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { Analytics } from "../_components/analytics";
 import { AnimatedTabs } from "../_components/animated-tab";
 import { Header } from "../_components/header";
-import { Issues } from "../_components/issues";
 import { Metadata } from "../_components/metadata";
-import { MetadataError } from "../_components/metadata-error";
 import { ProjectData } from "../_components/project-data";
-import WebsiteDetailSkeleton from "../_components/website-skeleton";
+import { useParams } from "next/navigation";
+import { Project } from "@/types";
+import UptimeCard from "../_components/uptime-card";
+import { useTabStore } from "@/store/store";
+import { MetadataSkeleton } from "../_components/metadata-skeleton";
+import { ProjectDataSkeleton } from "../_components/projectData-skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 
-type Props = {
-  params: Promise<{ id: string }>;
-};
-
-const WebsiteDetailPage = async ({ params }: Props) => {
-  const { id } = await params;
-  return (
-    <ProjectProvider>
-      <Suspense fallback={<WebsiteDetailSkeleton />}>
-        <WebsiteDetail id={id} />
-      </Suspense>
-    </ProjectProvider>
-  );
-};
-
-const WebsiteDetail = async ({ id }: { id: string }) => {
-  console.log(id, "id");
-  const websiteData = await getAnalytics(id);
-  console.log(websiteData, "project analytics data");
+export default function WebsiteDetailPage() {
+  const params = useParams<{id: string}>();
+  
+  const id = useMemo(() => {
+    const w = params?.id;
+    return Array.isArray(w) ? w[0] : w;
+  }, [params]);
 
   const tabs = [
-    { id: "metadata", label: "Metadata" },
     { id: "analytics", label: "Analytics" },
-    { id: "issues", label: "Issues" },
+    { id: "uptime", label: "Uptime" },
   ];
+   const { activeTab } = useTabStore();
+   const [project, setProject] = useState<Project | null>(null);
 
-  return !websiteData ? (
-    <div className="flex justify-center items-center w-full h-screen">
-      <MetadataError />
+  useEffect(() => {
+    if (!id) return;
+    
+        (async () => {
+          try {
+            const res = await fetch(`/api/project/${id}`);
+            if (!res.ok) throw new Error("Failed to fetch project");
+
+            const data = await res.json();
+            console.log(data, "fetched project");
+            const projectData: Project = {
+              id: data.project.id,
+              name: data.project.name,
+              url: data.project.url ?? data.project.domain ?? "",
+              domain: data.project.domain ?? undefined,
+              status: data.project.status ?? "unknown",
+              lastChecked: data.project.lastChecked ?? null,
+              checks: [],
+              analytics: data.project.analytics // start empty, ticks handled in card
+            };
+    
+            setProject(projectData);
+            console.log(projectData.analytics,"msdhoni")
+          } catch (err) {
+            console.error("Error fetching project:", err);
+          }
+        })();
+  }, [id])
+
+  if (!project) {
+    return (
+    <div className="p-5 lg:px-32 lg:py-20">
+      <ProjectDataSkeleton />
+
+      <div className="mt-4">
+        <AnimatedTabs tabs={tabs} />
+      </div>
+      
+      <div className="flex flex-col gap-4 py-4">
+        {activeTab === "metadata" && <MetadataSkeleton />}
+        {activeTab === "analytics" && (
+          <div className="p-4 border border-[#383b4183] rounded-lg">
+            <Skeleton className="h-6 w-32 mb-2 bg-slate-500" />
+            <Skeleton className="h-48 w-full bg-slate-500 rounded-lg" />
+          </div>
+        )}
+        {activeTab === "uptime" && (
+          <div className="p-4 border border-[#383b4183] rounded-lg">
+            <Skeleton className="h-6 w-40 mb-2 bg-slate-500" />
+            <Skeleton className="h-20 w-full bg-slate-500 rounded-lg" />
+          </div>
+        )}
+      </div>
     </div>
-  ) : (
+  );
+  }
+
+  return(
     <>
-      <Header title="Your Projects" project={websiteData?.name} />
+      <Header title="Your Projects" project={project?.name} />
       <div className="p-5 lg:px-32 lg:py-10">
+        <ProjectProvider>
         <ProjectData
           website={id}
           websiteData={{
-            name: websiteData?.name,
-            description: websiteData?.description,
+            name: project?.name,
+            description: "description",
           }}
         />
-        <div className="flex flex-col gap-4 py-4">
-          <AnimatedTabs tabs={tabs} />
-          <Metadata domain={websiteData?.name} />
-          <Analytics analytics={websiteData?.analytics} />
-          <Issues />
-        </div>
+         <AnimatedTabs tabs={tabs}></AnimatedTabs>
+         <div className="flex flex-col gap-4 py-4">
+          {activeTab === "analytics" && <Analytics analytics={project.analytics} />}
+          {activeTab === "uptime" && <UptimeCard project={project} />}
+          </div>
+      </ProjectProvider>
       </div>
     </>
   );
 };
-
-export default WebsiteDetailPage;

@@ -9,13 +9,14 @@ interface UptimeCardProps {
 }
 
 const MAX_TICKS = 30;
-const WS_URL = process.env.NEXT_PUBLIC_WS_URL || " ";
+const WS_URL =  "ws://localhost:8080/ws";
+//process.env.NEXT_PUBLIC_WS_URL ||
 
 const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   const [status, setStatus] = useState(project.status);
   const [checks, setChecks] = useState<string[]>(
     Array(MAX_TICKS - 1).fill("unknown"),
-  ); // recent 29 from API
+  );
   const [lastChecked, setLastChecked] = useState(project.lastChecked);
 
   // Fetch recent 29 ticks on mount
@@ -39,8 +40,8 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
   useEffect(() => {
     const ws = new WebSocket(WS_URL);
     console.log("wss", WS_URL);
-    ws.onopen = () => console.log("✅ WebSocket connected");
-    ws.onclose = () => console.log("❌ WebSocket closed");
+    ws.onopen = () => console.log(" WebSocket connected");
+    ws.onclose = () => console.log(" WebSocket closed");
     ws.onerror = (err) => console.error("WebSocket error:", err);
 
     ws.onmessage = (event) => {
@@ -51,8 +52,8 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
       setLastChecked(new Date().toISOString());
 
       setChecks((prev) => {
-        const next = [...prev, "unknown"].slice(-MAX_TICKS - 1); // keep last tick unknown
-        next[next.length - 1] = update.status; // update last tick with current status
+        const next = [...prev, "unknown"].slice(-MAX_TICKS - 1);
+        next[next.length - 1] = update.status;
         return next;
       });
     };
@@ -64,17 +65,34 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
     (_, i) => checks[i] ?? "unknown",
   );
 
+  // Derived metrics
+  const totalChecks = ticks.filter((t) => t !== "unknown").length;
+  const uptimeCount = ticks.filter((t) => t === "up").length;
+  const downtimeCount = ticks.filter((t) => t === "down").length;
+  const uptimePercentage =
+    totalChecks > 0 ? ((uptimeCount / totalChecks) * 100).toFixed(2) : "N/A";
+
   return (
-    <div className="bg-[#222531] shadow-md rounded-lg p-6 max-w-5xl items-start">
-      <div className="h-8 w-18 bg-[#1E274F] rounded-lg flex justify-center items-center mb-2 px-2 border border-radius-300 border-[#1E274F]">
-        <h2 className="text-lg text-[#FFFFFF] font-semibold text-center text-shadow-lg">
+    <div
+      className="group relative 
+                 bg-gradient-to-br from-gray-900/80 to-gray-950/90 
+                 backdrop-blur-sm rounded-2xl p-8 
+                 border border-gray-800/50 max-w-5xl
+                 hover:border-gray-700 hover:shadow-2xl hover:shadow-black/50
+                 transition-all duration-300 ease-out 
+                 hover:scale-[1.02] hover:-translate-y-1"
+    >
+      {/* Project Title */}
+      <div className="h-8 w-fit bg-gray-800/70 rounded-lg flex justify-center items-center mb-4 px-3 border border-gray-700/50">
+        <h2 className="text-lg text-white font-semibold text-center">
           {project.name}
         </h2>
       </div>
-      <p className="text-gray-400 mb-4 text-lg">URL: {project.url}</p>
+
+      <p className="text-gray-400 mb-6 text-sm">URL: {project.url}</p>
 
       {/* Ticks */}
-      <div className="flex flex-wrap gap-1 mb-2">
+      <div className="flex flex-wrap gap-1 mb-4">
         {ticks.map((tick, idx) => (
           <div
             key={idx}
@@ -82,32 +100,46 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
               tick === "up"
                 ? "bg-green-500 border-green-600"
                 : tick === "down"
-                  ? "bg-red-500 border-red-600"
-                  : "bg-gray-300 border-gray-400"
+                ? "bg-red-500 border-red-600"
+                : "bg-gray-500/40 border-gray-600"
             }`}
           />
         ))}
       </div>
 
-      {/* Current status */}
-      <p className="text-gray-500 text-sm">
-        Current status:{" "}
-        <span
-          className={`font-semibold ${
-            status === "up"
-              ? "text-green-600"
-              : status === "down"
-                ? "text-red-600"
-                : "text-gray-500"
-          }`}
-        >
-          {status}
-        </span>
-      </p>
+      {/* Metrics */}
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="bg-gray-800/50 border border-gray-700/40 p-3 rounded-lg text-center">
+          <p className="text-xs text-gray-400">Uptime %</p>
+          <p className="text-lg font-bold text-green-400">{uptimePercentage}%</p>
+        </div>
+        <div className="bg-gray-800/50 border border-gray-700/40 p-3 rounded-lg text-center">
+          <p className="text-xs text-gray-400">Incidents</p>
+          <p className="text-lg font-bold text-red-400">{downtimeCount}</p>
+        </div>
+        <div className="bg-gray-800/50 border border-gray-700/40 p-3 rounded-lg text-center">
+          <p className="text-xs text-gray-400">Checks</p>
+          <p className="text-lg font-bold text-blue-400">{totalChecks}</p>
+        </div>
+        <div className="bg-gray-800/50 border border-gray-700/40 p-3 rounded-lg text-center">
+          <p className="text-xs text-gray-400">Last Status</p>
+          <p
+            className={`text-lg font-bold ${
+              status === "up"
+                ? "text-green-400"
+                : status === "down"
+                ? "text-red-400"
+                : "text-gray-400"
+            }`}
+          >
+            {status}
+          </p>
+        </div>
+      </div>
 
       {/* Last checked */}
       {lastChecked && (
-        <p className="text-gray-400 text-xs mt-1">
+        <p className="text-gray-500 text-xs mt-2">
           Last checked: {new Date(lastChecked).toLocaleTimeString()}
         </p>
       )}

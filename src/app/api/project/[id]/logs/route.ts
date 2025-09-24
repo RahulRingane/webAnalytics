@@ -1,12 +1,11 @@
 import { auth } from "@/auth";
 import prisma from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
     const session = await auth();
 
-    // Check if the user is authenticated and is an admin
     if (!session) {
       return NextResponse.json(
         {
@@ -17,10 +16,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Parse the request body
     const { message, level = "info" } = await req.json();
 
-    // Validate the input
     if (!message) {
       return NextResponse.json(
         { message: "Message is required", success: false },
@@ -28,7 +25,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create the log
     const log = await prisma.log.create({
       data: {
         message,
@@ -49,11 +45,12 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function GET( req: NextRequest,{ params }: { params: Promise<{ id: string }> }) {
   try {
+
+    const { id } = await params;
     const session = await auth();
 
-    // Check if the user is authenticated
     if (!session) {
       return NextResponse.json(
         { message: "Unauthorized", success: false },
@@ -61,12 +58,28 @@ export async function GET() {
       );
     }
 
-    // Fetch all logs
     const logs = await prisma.log.findMany({
       orderBy: {
-        createdAt: "desc", // Sort logs by creation date (newest first)
+        createdAt: "desc",
       },
     });
+
+    const incidents = await prisma.incident.findMany({
+      where: {
+        projectId: id,
+      },
+      orderBy: {
+        startTime: "desc", 
+      },
+      include: {
+        project: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
 
     return NextResponse.json(
       { logs, message: "Logs fetched successfully", success: true },

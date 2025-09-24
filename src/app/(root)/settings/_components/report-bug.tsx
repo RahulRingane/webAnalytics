@@ -83,7 +83,7 @@ export const CreateBugReportModal = memo(() => {
             <div className="flex flex-col items-start gap-2 mt-2 py-2 border-[#383b4183] border-b">
               <Input
                 style={{ fontSize: "24px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-white placeholder:text-[24px] placeholder:text-[#626366]"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-full font-medium text-black placeholder:text-[24px] placeholder:text-[#626366]"
                 placeholder="Bug title"
                 name="title"
                 value={data.title}
@@ -93,7 +93,7 @@ export const CreateBugReportModal = memo(() => {
             <div className="mt-4">
               <Textarea
                 style={{ fontSize: "14px" }}
-                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-white placeholder:text-[14px] placeholder:text-[#626366] resize-none"
+                className="bg-transparent px-2 py-1 border-0 outline-0 h-[320px] font-medium text-black placeholder:text-[14px] placeholder:text-[#626366] resize-none"
                 placeholder="Describe the bug..."
                 name="description"
                 value={data.description}
@@ -105,13 +105,13 @@ export const CreateBugReportModal = memo(() => {
         <DialogFooter className="px-2 pt-3 border-[#383b4183] border-t">
           <button
             onClick={onClose}
-            className="bg-[#323232] hover:bg-[#32323298] px-6 py-0 rounded-lg w-fit h-8 text-white text-xs"
+            className="bg-[#323232] hover:bg-[#32323298] px-6 py-0 rounded-lg w-fit h-8 text-black text-xs"
           >
             Cancel
           </button>
           <button
             onClick={onSubmit}
-            className="bg-[#3d7682] hover:bg-[#3d7782c3] px-6 py-0 rounded-lg w-fit h-8 text-white text-xs"
+            className="bg-[#3d7682] hover:bg-[#3d7782c3] px-6 py-0 rounded-lg w-fit h-8 text-black text-xs"
           >
             {creating ? "Creating..." : "Create Report"}
           </button>

@@ -9,7 +9,7 @@ type Props = {
   website: string;
   websiteData: {
     name: string | null;
-    description: string | null;
+    description?: string | null;
   };
 };
 
