@@ -164,8 +164,8 @@ export async function POST(req: NextRequest) {
       utm,
       referrer,
       path,
+      domain
     } = payload;
-    const domain = "https://rahulringane.github.io/index/";
     console.log(domain, url, "visitorId");
 
     if (!url.includes(domain)) {
