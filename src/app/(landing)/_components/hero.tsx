@@ -103,7 +103,7 @@ const Hero = () => {
               <div className="hidden lg:block right-[0%] z-50 absolute inset-y-0 bg-gradient-to-l from-black w-[60%] h-[86%] pointer-events-none"></div>
               <div className="lg:absolute lg:inset-0">
                 <Image
-                  src="/bg/hero-1.png"
+                  src="/bg/webi9.png"
                   alt="hero"
                   sizes="1000px"
                   width={1024}
