@@ -90,7 +90,7 @@ export const Analytics = ({ analytics, performanceAnalytics }: { analytics: any,
       </div>
 
       {/* Analytics Graph */}
-      <div className="p-4 border-b border-gray-700/50">
+      <div className="p-1 border-b border-gray-700/50">
         <AnalyticsGraph visitHistory={analytics?.visitHistory || []} />
       </div>
 

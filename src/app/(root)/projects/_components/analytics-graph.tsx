@@ -126,7 +126,7 @@ const AnalyticsGraph = ({ visitHistory }: any) => {
   }
 
   return (
-    <div className="p-4 w-full h-80">
+    <div className="w-full h-80">
       <ResponsiveContainer
         width="100%"
         height="100%"

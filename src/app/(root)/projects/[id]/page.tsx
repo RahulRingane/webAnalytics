@@ -124,7 +124,7 @@ export default function WebsiteDetailPage() {
   return (
     <>
       <Header title="Your Projects" project={project?.name} />
-      <div className="p-5 lg:px-32 lg:py-10">
+      <div className="p-2 lg:px-32 lg:py-10">
         <ProjectProvider>
           <ProjectData project={project} />
           <AnimatedTabs tabs={tabs} />
