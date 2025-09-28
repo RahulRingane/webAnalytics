@@ -48,9 +48,10 @@ model Project {
   status             MonitorStatus  @default(pending)
 
   // Optional relations
-  analytics          Analytics?
-  checks             Check[]
-  incidents          Incident[]
+  analytics             Analytics?
+  checks                Check[]
+  incidents             Incident[]
+  performanceAnalytics  PerformanceAnalytics[]
 
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
@@ -86,22 +87,22 @@ model Incident {
 }
 
 model Analytics {
-  id               String             @id @default(cuid())
-  projectId        String             @unique
-  project          Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id                   String             @id @default(cuid())
+  projectId            String             @unique
+  project              Project            @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
-  totalPageVisits  Int                @default(0)
-  totalVisitors    Int                @default(0)
+  totalPageVisits      Int                @default(0)
+  totalVisitors        Int                @default(0)
 
-  visitHistory     VisitData[]
-  routeAnalytics   RouteAnalytics[]
-  countryAnalytics CountryAnalytics[]
-  deviceAnalytics  DeviceAnalytics[]
-  osAnalytics      OSAnalytics[]
-  sourceAnalytics  SourceAnalytics[]
+  visitHistory         VisitData[]
+  routeAnalytics       RouteAnalytics[]
+  countryAnalytics     CountryAnalytics[]
+  deviceAnalytics      DeviceAnalytics[]
+  osAnalytics          OSAnalytics[]
+  sourceAnalytics      SourceAnalytics[]
 
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
 }
 
 model VisitData {
@@ -116,6 +117,23 @@ model VisitData {
   @@unique([analyticsId, date])
   @@index([analyticsId])
   @@index([date])
+}
+
+model PerformanceAnalytics {
+  id                String     @id @default(cuid()) 
+  projectId         String
+  dom_ready         Int     
+  load_time         Int       
+  network_latency   Int        
+  processing_time   Int        
+  total_time        Int 
+  timestamp    DateTime @default(now())
+  
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+
+   @@index([projectId, timestamp(sort: Desc)]) 
+   @@unique([projectId, dom_ready, load_time, network_latency, processing_time, total_time])
 }
 
 model RouteAnalytics {

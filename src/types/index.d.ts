@@ -1,4 +1,4 @@
-import { Analytics } from "@prisma/client";
+import { Analytics, PerformanceAnalytics } from "@prisma/client";
 
 // /types.ts
 export type UpDownUnknown = "up" | "down" | "unknown";
@@ -17,10 +17,12 @@ export type Project = {
   name: string;
   url: string; // full URL (https://example.com)
   domain?: string; // optional/plain domain if you keep it
+  description: string;
   status?: UpDownUnknown;
   lastChecked: string | null;
   checks: ProjectCheck[];
-  analytics: Analytics
+  analytics: Analytics;
+  performanceAnalytics: PerformanceAnalytics[];
 };
 
 // WebSocket message we expect from the worker

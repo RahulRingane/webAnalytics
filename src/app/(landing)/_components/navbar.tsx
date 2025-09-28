@@ -49,7 +49,7 @@ const Navbar = () => {
             >
               <div className="flex items-center gap-x-4">
                 <Link
-                  href="https://github.com/Mihir2423/analytics"
+                  href="/signin"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

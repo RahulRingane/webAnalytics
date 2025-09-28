@@ -164,9 +164,11 @@ export async function POST(req: NextRequest) {
       utm,
       referrer,
       path,
-      domain
+      domain,
+      data
     } = payload;
     console.log(domain, url, "visitorId");
+    console.log("data", data.load_time)
 
     if (!url.includes(domain)) {
       console.log("hiiiii");
@@ -237,6 +239,17 @@ export async function POST(req: NextRequest) {
     });
 
     const analyticsId = analyticsRecord.id;
+
+    const performanceAnalytics = await prisma.performanceAnalytics.create({
+      data: {
+        projectId: projectId,
+        dom_ready: data.dom_ready,
+        load_time: data.load_time,
+        network_latency: data.network_latency,
+        processing_time: data.processing_time,
+        total_time: data.total_time,
+      },
+    })
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
