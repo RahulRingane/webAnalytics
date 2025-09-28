@@ -5,7 +5,7 @@ export default function Loading() {
   console.log("loading here");
   return(
     <div>
-        <MetadataSkeleton/>
+        
     </div>
   )
 }

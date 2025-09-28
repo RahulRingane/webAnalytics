@@ -61,7 +61,7 @@ export default function WebsiteDetailPage() {
         const perfArray = data.project.performanceAnalytics;
         if (Array.isArray(perfArray) && perfArray.length > 0) {
           const total = perfArray.reduce(
-             // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (acc: any, curr: any) => {
               acc.dom_ready += curr.dom_ready;
               acc.load_time += curr.load_time;
