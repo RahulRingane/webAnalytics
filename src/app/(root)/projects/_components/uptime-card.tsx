@@ -89,7 +89,7 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
         </h2>
       </div>
 
-      <p className="text-gray-400 mb-6 text-sm">URL: {project.url}</p>
+      <p className="text-gray-400 mb-6 text-sm">URL: {project.domain}</p>
 
       {/* Ticks */}
       <div className="flex flex-wrap gap-1 mb-4">
