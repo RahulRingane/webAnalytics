@@ -152,6 +152,7 @@ function getCountryInfo(req: NextRequest): { code: string; name: string } {
 }
 
 export async function POST(req: NextRequest) {
+  console.log("in api")
   try {
     const payload = await req.json();
     const {
@@ -184,8 +185,6 @@ export async function POST(req: NextRequest) {
     const projectExist = await prisma.project.findFirst({
       where: { domain: `${domain}` },
     });
-    console.log("project not founds", domain);
-    console.log(projectExist, "pexist");
     if (!projectExist) {
       console.log("project not founds");
       return NextResponse.json(
@@ -198,7 +197,7 @@ export async function POST(req: NextRequest) {
     }
 
     const projectId = projectExist.id;
-    console.log(projectId, "projectid");
+
     // Get country information using our enhanced method
     const { code: countryCode, name: countryName } = getCountryInfo(req);
 
@@ -240,20 +239,42 @@ export async function POST(req: NextRequest) {
 
     const analyticsId = analyticsRecord.id;
 
-    const performanceAnalytics = await prisma.performanceAnalytics.create({
-      data: {
-        projectId: projectId,
-        dom_ready: data.dom_ready,
-        load_time: data.load_time,
-        network_latency: data.network_latency,
-        processing_time: data.processing_time,
-        total_time: data.total_time,
-      },
-    });
+    /* const performanceAnalytics = await prisma.performanceAnalytics.create({
+       data: {
+         projectId: projectId,
+         dom_ready: data.dom_ready,
+         load_time: data.load_time,
+         network_latency: data.network_latency,
+         processing_time: data.processing_time,
+         total_time: data.total_time,
+       },
+     });*/
+
+    if (
+      data.dom_ready !== undefined &&
+      data.load_time !== undefined &&
+      data.network_latency !== undefined &&
+      data.processing_time !== undefined &&
+      data.total_time !== undefined
+    ) {
+      await prisma.performanceAnalytics.create({
+        data: {
+          projectId,
+          dom_ready: data.dom_ready,
+          load_time: data.load_time,
+          network_latency: data.network_latency,
+          processing_time: data.processing_time,
+          total_time: data.total_time,
+        },
+      });
+    } else {
+      console.log("Skipping performanceAnalytics insert due to missing metrics");
+    }
 
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
+    today.setUTCHours(0, 0, 0, 0);
+    console.log(analyticsId, "aid")
+    console.log(today, "today")
     await prisma.visitData.upsert({
       where: {
         analyticsId_date: {
@@ -272,6 +293,7 @@ export async function POST(req: NextRequest) {
         visitors: event === "session_start" ? 1 : 0,
       },
     });
+    console.log("visit data")
 
     if (path) {
       await prisma.routeAnalytics.upsert({
