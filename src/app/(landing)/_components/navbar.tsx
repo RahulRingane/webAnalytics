@@ -48,11 +48,7 @@ const Navbar = () => {
               }}
             >
               <div className="flex items-center gap-x-4">
-                <Link
-                  href="/signin"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link href="/signin" target="_blank" rel="noopener noreferrer">
                   <button className="flex items-center gap-2 bg-[#f9fafb] hover:bg-[#f9fafb]/90 px-8 py-1 rounded-md text-primary text-sm text-shadow-md font-medium h-10 cursor-pointer">
                     Login
                   </button>

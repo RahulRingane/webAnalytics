@@ -9,7 +9,7 @@ interface UptimeCardProps {
 }
 
 const MAX_TICKS = 30;
-const WS_URL =  process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080/ws";
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8080/ws";
 //process.env.NEXT_PUBLIC_WS_URL ||
 
 const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
@@ -100,8 +100,8 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
               tick === "up"
                 ? "bg-green-500 border-green-600"
                 : tick === "down"
-                ? "bg-red-500 border-red-600"
-                : "bg-gray-500/40 border-gray-600"
+                  ? "bg-red-500 border-red-600"
+                  : "bg-gray-500/40 border-gray-600"
             }`}
           />
         ))}
@@ -111,7 +111,9 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="bg-gray-800/50 border border-gray-700/40 p-3 rounded-lg text-center">
           <p className="text-xs text-gray-400">Uptime %</p>
-          <p className="text-lg font-bold text-green-400">{uptimePercentage}%</p>
+          <p className="text-lg font-bold text-green-400">
+            {uptimePercentage}%
+          </p>
         </div>
         <div className="bg-gray-800/50 border border-gray-700/40 p-3 rounded-lg text-center">
           <p className="text-xs text-gray-400">Incidents</p>
@@ -128,8 +130,8 @@ const UptimeCard: React.FC<UptimeCardProps> = ({ project }) => {
               status === "up"
                 ? "text-green-400"
                 : status === "down"
-                ? "text-red-400"
-                : "text-gray-400"
+                  ? "text-red-400"
+                  : "text-gray-400"
             }`}
           >
             {status}

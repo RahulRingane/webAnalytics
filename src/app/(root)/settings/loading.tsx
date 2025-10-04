@@ -2,7 +2,7 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function IncidentsSkeleton  () {
+export default function IncidentsSkeleton() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 p-4 w-full md:w-[75%] text-sm md:text-lg">
@@ -45,4 +45,4 @@ export default function IncidentsSkeleton  () {
       </div>
     </div>
   );
-};
+}

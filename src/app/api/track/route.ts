@@ -165,10 +165,10 @@ export async function POST(req: NextRequest) {
       referrer,
       path,
       domain,
-      data
+      data,
     } = payload;
     console.log(domain, url, "visitorId");
-    console.log("data", data.load_time)
+    console.log("data", data.load_time);
 
     if (!url.includes(domain)) {
       console.log("hiiiii");
@@ -249,7 +249,7 @@ export async function POST(req: NextRequest) {
         processing_time: data.processing_time,
         total_time: data.total_time,
       },
-    })
+    });
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);

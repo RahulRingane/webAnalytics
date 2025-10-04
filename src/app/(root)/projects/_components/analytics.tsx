@@ -14,7 +14,13 @@ import { toast } from "sonner";
 import { AnalyticsGraph } from "./analytics-graph";
 import { ScriptDisplay } from "./script";
 
-export const Analytics = ({ analytics, performanceAnalytics }: { analytics: any, performanceAnalytics: any }) => {
+export const Analytics = ({
+  analytics,
+  performanceAnalytics,
+}: {
+  analytics: any;
+  performanceAnalytics: any;
+}) => {
   const { activeTab } = useTabStore();
   const [scriptHtml, setScriptHtml] = useState<string | null>(null);
   const [reactScriptHtml, setReactScriptHtml] = useState<string | null>(null);
@@ -56,22 +62,26 @@ export const Analytics = ({ analytics, performanceAnalytics }: { analytics: any,
   if (!analytics) {
     return (
       <div
-        className={`flex-col border border-gray-700 rounded-lg shadow-sm bg-gray-900/80 p-6 gap-4 ${activeTab === "analytics" ? "flex" : "hidden"
-          }`}
+        className={`flex-col border border-gray-700 rounded-lg shadow-sm bg-gray-900/80 p-6 gap-4 ${
+          activeTab === "analytics" ? "flex" : "hidden"
+        }`}
       >
         <div className="flex flex-col items-center gap-3 text-white">
           <CloudAlert size={36} className="text-gray-400" />
           <h2 className="font-semibold text-xl">No Analytics Data</h2>
           <p className="text-gray-400 text-center text-sm max-w-xs">
-            Analytics tracking is not configured. Use the scripts below to
-            start collecting insights.
+            Analytics tracking is not configured. Use the scripts below to start
+            collecting insights.
           </p>
 
           {scriptHtml && (
             <ScriptDisplay html={scriptHtml} onCopy={handleNextScriptCopy} />
           )}
           {reactScriptHtml && (
-            <ScriptDisplay html={reactScriptHtml} onCopy={handleReactScriptCopy} />
+            <ScriptDisplay
+              html={reactScriptHtml}
+              onCopy={handleReactScriptCopy}
+            />
           )}
         </div>
       </div>
@@ -80,13 +90,17 @@ export const Analytics = ({ analytics, performanceAnalytics }: { analytics: any,
 
   return (
     <div
-      className={`flex-col border border-gray-700 rounded-lg shadow-sm bg-gray-900/80 ${activeTab === "analytics" ? "flex" : "hidden"
-        }`}
+      className={`flex-col border border-gray-700 rounded-lg shadow-sm bg-gray-900/80 ${
+        activeTab === "analytics" ? "flex" : "hidden"
+      }`}
     >
       {/* Top Stats: compact and minimal */}
       <div className="flex gap-4 p-4 border-b border-gray-700/50">
         <CompactStat label="Visitors" value={analytics?.totalVisitors ?? 0} />
-        <CompactStat label="Page Views" value={analytics?.totalPageVisits ?? 0} />
+        <CompactStat
+          label="Page Views"
+          value={analytics?.totalPageVisits ?? 0}
+        />
       </div>
 
       {/* Analytics Graph */}
@@ -135,28 +149,42 @@ export const Analytics = ({ analytics, performanceAnalytics }: { analytics: any,
           <AnalyticsCard
             title="DOM Ready"
             subtitle="ms"
-            data={[{ metric: "DOM Ready", value: performanceAnalytics.dom_ready }]}
+            data={[
+              { metric: "DOM Ready", value: performanceAnalytics.dom_ready },
+            ]}
             dataKey="metric"
             valueKey="value"
           />
           <AnalyticsCard
             title="Load Time"
             subtitle="ms"
-            data={[{ metric: "Load Time", value: performanceAnalytics.load_time }]}
+            data={[
+              { metric: "Load Time", value: performanceAnalytics.load_time },
+            ]}
             dataKey="metric"
             valueKey="value"
           />
           <AnalyticsCard
             title="Network Latency"
             subtitle="ms"
-            data={[{ metric: "Network Latency", value: performanceAnalytics.network_latency }]}
+            data={[
+              {
+                metric: "Network Latency",
+                value: performanceAnalytics.network_latency,
+              },
+            ]}
             dataKey="metric"
             valueKey="value"
           />
           <AnalyticsCard
             title="Processing Time"
             subtitle="ms"
-            data={[{ metric: "Processing Time", value: performanceAnalytics.processing_time }]}
+            data={[
+              {
+                metric: "Processing Time",
+                value: performanceAnalytics.processing_time,
+              },
+            ]}
             dataKey="metric"
             valueKey="value"
           />

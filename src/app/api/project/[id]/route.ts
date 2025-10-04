@@ -127,7 +127,7 @@ export async function GET(
       where: { id: id, ownerId: session.user.id },
       include: {
         checks: true,
-        performanceAnalytics:true,
+        performanceAnalytics: true,
         analytics: {
           include: {
             visitHistory: true,
@@ -136,8 +136,8 @@ export async function GET(
             deviceAnalytics: true,
             osAnalytics: true,
             sourceAnalytics: true,
-          }
-        }
+          },
+        },
       },
     });
 

@@ -54,7 +54,6 @@ export default function SignupPage() {
     }
   };
 
-
   const handleGoogleLogin = async () => {
     setError(null);
     setPending(true);
@@ -129,11 +128,10 @@ export default function SignupPage() {
             </form>
 
             <div className="w-full relative flex items-center">
-  <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
-  <span className="mx-4 text-sm text-gray-400">or</span>
-<Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
-</div>
-
+              <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+              <span className="mx-4 text-sm text-gray-400">or</span>
+              <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
+            </div>
 
             <Button
               onClick={handleGoogleLogin}

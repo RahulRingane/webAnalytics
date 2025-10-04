@@ -2,7 +2,10 @@ import { auth } from "@/auth";
 import prisma from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }>},) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
     const { id } = await params;
     const session = await auth();
@@ -14,7 +17,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
     }
 
     const incidents = await prisma.incident.findMany({
-      where: { projectId: id }
+      where: { projectId: id },
     });
 
     return NextResponse.json(incidents, { status: 200 });

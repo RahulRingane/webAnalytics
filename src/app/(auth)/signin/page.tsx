@@ -107,7 +107,6 @@ export default function LoginPage() {
               <Separator className=" w-1/2 bg-gradient-to-r from-gray-800 via-neutral-500 to-gray-800" />
             </div>
 
-
             {/* Google login */}
             <Button
               onClick={handleGoogleLogin}

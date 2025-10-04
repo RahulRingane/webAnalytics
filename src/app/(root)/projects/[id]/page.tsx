@@ -61,7 +61,7 @@ export default function WebsiteDetailPage() {
         const perfArray = data.project.performanceAnalytics;
         if (Array.isArray(perfArray) && perfArray.length > 0) {
           const total = perfArray.reduce(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (acc: any, curr: any) => {
               acc.dom_ready += curr.dom_ready;
               acc.load_time += curr.load_time;
@@ -76,14 +76,18 @@ export default function WebsiteDetailPage() {
               network_latency: 0,
               processing_time: 0,
               total_time: 0,
-            }
+            },
           );
 
           const avg = {
             dom_ready: Math.round(total.dom_ready / perfArray.length),
             load_time: Math.round(total.load_time / perfArray.length),
-            network_latency: Math.round(total.network_latency / perfArray.length),
-            processing_time: Math.round(total.processing_time / perfArray.length),
+            network_latency: Math.round(
+              total.network_latency / perfArray.length,
+            ),
+            processing_time: Math.round(
+              total.processing_time / perfArray.length,
+            ),
             total_time: Math.round(total.total_time / perfArray.length),
           };
 

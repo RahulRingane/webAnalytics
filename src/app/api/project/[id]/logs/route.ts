@@ -45,9 +45,11 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET( req: NextRequest,{ params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
   try {
-
     const { id } = await params;
     const session = await auth();
 
@@ -69,7 +71,7 @@ export async function GET( req: NextRequest,{ params }: { params: Promise<{ id: 
         projectId: id,
       },
       orderBy: {
-        startTime: "desc", 
+        startTime: "desc",
       },
       include: {
         project: {
@@ -79,7 +81,6 @@ export async function GET( req: NextRequest,{ params }: { params: Promise<{ id: 
         },
       },
     });
-
 
     return NextResponse.json(
       { logs, message: "Logs fetched successfully", success: true },

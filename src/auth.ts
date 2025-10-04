@@ -60,7 +60,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         delete session.user.name;
       }
       if (token.accessToken) {
-         
         session.user.accessToken = token.accessToken;
       }
       return session;

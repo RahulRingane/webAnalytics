@@ -18,10 +18,10 @@ export async function GET() {
         projects: {
           select: {
             id: true,
-            name: true
-          }        
-        }
-      }
+            name: true,
+          },
+        },
+      },
     });
 
     return NextResponse.json(projectsId, { status: 200 });

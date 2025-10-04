@@ -2,7 +2,12 @@
 import { motion, easeInOut } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/store/store";
-import { FilePenLine, Trash, Globe, ArrowUpRightSquare as SquareArrowOutUpRight } from "lucide-react";
+import {
+  FilePenLine,
+  Trash,
+  Globe,
+  ArrowUpRightSquare as SquareArrowOutUpRight,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -69,7 +74,9 @@ export const ProjectCard = ({ data }: { data: Projects }) => {
                 : data.description}
             </p>
           ) : (
-            <p className="text-gray-500 text-xs 2xl:text-sm italic">No description provided</p>
+            <p className="text-gray-500 text-xs 2xl:text-sm italic">
+              No description provided
+            </p>
           )}
         </div>
 
