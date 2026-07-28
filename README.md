@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Overview
 
-## Getting Started
+Web Analytics Platform is a scalable, real-time analytics system built with Next.js, designed to track, process, and visualize user event data across websites and services. It combines a full-stack Next.js application with AWS infrastructure to deliver reliable event ingestion, asynchronous processing, and live dashboard updates.
 
-First, run the development server:
+> [Live Project](#) — replace with your deployed link
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Features](#features)
+- [Upcoming Features](#upcoming-features)
+- [Tech Stack](#tech-stack)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Installation
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (version 18 or later)
+- [Git](https://git-scm.com/downloads)
+- An AWS account with access to EC2, SQS, and appropriate IAM permissions
+- [Docker](https://www.docker.com/) installed for background worker deployment
+
+### Clone the Repository
+
+Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/rahul-ringane/web-analytics-platform.git && cd web-analytics-platform
+```
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Run Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Deploy Background Workers
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Background workers run on AWS EC2 inside Docker containers to handle asynchronous event processing:
 
-## Learn More
+```bash
+docker build -t analytics-worker .
+docker run -d --env-file .env.local analytics-worker
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Real-Time Event Tracking**: Captures, processes, and analyzes user events as they happen, enabling immediate insight into platform activity.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Full-Stack Next.js Architecture**: Frontend and backend are built entirely with Next.js, using API routes for event ingestion and analytics endpoints.
 
-## Deploy on Vercel
+- **Multi-Region Uptime Monitoring**: Continuously checks the status of websites and services across multiple regions, ensuring reliable global availability monitoring.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Asynchronous Event Processing**: Uses Amazon SQS to queue events, with background workers deployed on AWS EC2 via Docker to process them without blocking the main application.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Live Dashboard Updates**: WebSocket connections push real-time updates to dashboards, so analytics stay current without manual refreshes.
+
+- **Interactive Visualizations**: Charts and graphs display key metrics such as user engagement and traffic trends, making data easy to interpret at a glance.
+
+## Upcoming Features
+
+- **Advanced Filtering & Segmentation**: Allow users to filter analytics by custom event properties, time ranges, and user segments.
+
+- **Alerting System**: Notify users when uptime checks fail or traffic anomalies are detected.
+
+- **Bug Fixes & Performance Improvements**: Ongoing work to improve reliability and reduce latency under high event volume.
+
+## Tech Stack
+
+- **Frontend & Backend**: Next.js
+- **Compute**: AWS EC2
+- **Messaging Queue**: AWS SQS
+- **Containerization**: Docker
+- **Real-Time Communication**: WebSockets
+
+## Contributing
+
+Contributions are welcome! If you'd like to contribute to Web Analytics Platform, please follow these steps:
+
+1.  **Fork the repository.**
+
+2.  **Create a new branch:** `git checkout -b feature/YourFeature`
+
+3.  **Commit your changes:** `git commit -am "Add new feature"`
+
+4.  **Push to the branch:** `git push origin feature/YourFeature`
+
+5.  **Open a Pull Request** describing your changes and the problem they solve.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
